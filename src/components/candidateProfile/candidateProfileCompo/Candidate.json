@@ -1,0 +1,58 @@
+{
+    "name": "Pradeep Kadam",
+    "gender": "Male",
+    "qualification": "Bachelor's of Computer Application",
+    "age": "30 - 35",
+    "phone": "+919226325101",
+    "email": "pradeeptraje@gmail.com",
+    "location": "Mumbai",
+    "about_me": "5+ years of professional experience, including 1+ year of DevOps expertise. Increased application deployment efficiency by 30% by Dockerizing an application and utilizing a multi-stage image for production on Docker Hub. Streamlined application deployments on Kubernetes clusters by 33% through the creation and implementation of customized Helm charts. Improved code quality by 15% by integrating Jenkins for CI/CD pipelines and SonarQube for static code analysis.",
+    "education": {
+      "degree": "Bachelor's of Computer Application",
+      "date_range": "06/06/2006 - 06/06/2009",
+      "institution": "Sinhgad College of Commerce, Pune University"
+    },
+    "work_experience": [
+      {
+        "position": "Associate Partner | Trainer",
+        "company": "Profitmart Securities Pvt. Ltd",
+        "start_date": "06/06/2018",
+        "end_date": "11/02/2022",
+        "responsibilities": [
+          "Leveraged experience to build algorithmic trading systems, effectively increasing profits by 18%."
+        ]
+      },
+      {
+        "position": "Content Moderator",
+        "company": "Accenture Solutions Pvt Ltd",
+        "start_date": "11/02/2022",
+        "end_date": "11/05/2022",
+        "responsibilities": [
+          "Ensured online content compliance with 64+ policies and legal regulations.",
+          "Reviewed 150+ daily content pieces for hate speech, plagiarism, copyright issues, ensuring compliance."
+        ]
+      },
+      {
+        "position": "Implementation Specialist",
+        "company": "TechExped Technology Services Pvt Ltd | Everfi from Blackbaud.inc",
+        "start_date": "24/04/2022",
+        "end_date": "24/04/2023",
+        "responsibilities": [
+          "Achieved a 22% increase in productivity by developing and implementing automation software.",
+          "Executed the development of 109+ websites and seamlessly integrated them with AWS S3 service using YAML configurations."
+        ]
+      },
+      {
+        "position": "Senior UI/UX Developer",
+        "company": "TechExped Technology Services Pvt Ltd | Everfi from Blackbaud.inc",
+        "start_date": "24/04/2023",
+        "end_date": "Present",
+        "responsibilities": [
+          "Experience in designing and deploying multi-stage, multi-agent pipelines using Jenkins for automated software delivery, contributing to a 19% increase in performance.",
+          "Experience in optimized cloud infrastructure configuration, leading to a 10% decrease in monthly cloud costs."
+        ]
+      }
+    ],
+    "disability": "Locomotor Disability"
+  }
+  
