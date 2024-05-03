@@ -34,7 +34,7 @@ const AdminChangePassword = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Current password"
-                  className="outline-none"
+                  // className="outline-none"
                 />
                 <span
                   className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"

@@ -6,40 +6,41 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import AppLayout from "../layout/Layout";
-import Job from "@/Dashboard/DashBoardPages/Empolyees/Job";
-import Applicants from "@/Dashboard/DashBoardPages/Empolyees/Applicants";
-import SideBar from "@/Dashboard/DashBoardmain/SideBar";
-import DashBoard from "@/Dashboard/DashBoardPages/Empolyees/DashBoard";
-import Messages from "@/Dashboard/DashBoardPages/Empolyees/Messages";
-import Meetings from "@/Dashboard/DashBoardPages/Empolyees/Meetings";
-import Company from "@/Dashboard/DashBoardPages/Empolyees/Company";
-import Setting from "@/Dashboard/DashBoardPages/Empolyees/Setting";
+const Job = lazy(() => import("@/Dashboard/DashBoardPages/Empolyees/Job"));
+const Applicants = lazy(() => import("@/Dashboard/DashBoardPages/Empolyees/Applicants"));
+const SideBar = lazy(() => import("@/Dashboard/DashBoardmain/SideBar"));
+const DashBoard = lazy(() => import("@/Dashboard/DashBoardPages/Empolyees/DashBoard"));
+const Messages = lazy(() => import("@/Dashboard/DashBoardPages/Empolyees/Messages"));
+const Meetings = lazy(() => import("@/Dashboard/DashBoardPages/Empolyees/Meetings"));
+const Company = lazy(()=>import("@/Dashboard/DashBoardPages/Empolyees/Company")) ;
+const Setting = lazy(()=>import("@/Dashboard/DashBoardPages/Empolyees/Setting")) ;
 
-import SingleJobDetails from "../components/SingleJobDetailsComp/SingleJobMain";
-import CandidatesDashBoard from "@/Dashboard/DashBoardPages/Candidates/CandidatesDashBoard";
-import CandidatesMyJob from "@/Dashboard/DashBoardPages/Candidates/CandidatesMyJob";
-import CandidatesProfile from "@/Dashboard/DashBoardPages/Candidates/CandidatesProfile";
-import CandidatesMessages from "@/Dashboard/DashBoardPages/Candidates/CandidatesMessages";
-import CandidatesMeetings from "@/Dashboard/DashBoardPages/Candidates/CandidatesMeetings";
-import CandidatesSetting from "@/Dashboard/DashBoardPages/Candidates/CandidatesSetting";
-import PostJob from "@/Dashboard/DashBoardPages/Empolyees/PostJob";
-import ProtectedEmployerRoute from "./ProtectedEmployerRoute";
-import ProtectedCandidateRoute from "./ProtectedCandidateRoute";
-import MoreFaq from "../components/faq/viewMoreFaq/MoreFaq";
-import AdminDashboard from "@/Dashboard/DashBoardPages/Admins/AdminDashboard";
-import AdminSetting from "@/Dashboard/DashBoardPages/Admins/AdminSetting";
-import AdminCandidate from "@/Dashboard/DashBoardPages/Admins/AdminCandidate";
-import AdminEmployees from "@/Dashboard/DashBoardPages/Admins/AdminEmployees";
-import AdminNotification from "@/Dashboard/DashBoardPages/Admins/AdminNotification";
-import AdminSectorsAndCategories from "@/Dashboard/DashBoardPages/Admins/AdminSectorsAndCategories";
-import CompaniesMain from "../components/companies/CompaniesMain";
-import CompanyDetailMain from "../components/companyDetail/CompanyDetailMain";
-import CandidatesMain from "../components/candidates/CandidatesMain";
-import CandidateProfileMain from "../components/candidateProfile/CandidateProfileMain";
-import ResetPassword from "../components/password/ResetPassword";
-import CandidateNcsPage from "@/Dashboard/DashBoardPages/Candidates/CandidateNcsPage";
-import EmpolyesJobPost from "@/Dashboard/DashboardComponents/Empolyees/AllJob/EmpolyesJobPost";
-import EmployeesPostCampany from "@/Dashboard/DashboardComponents/Empolyees/AllCompany/EmployeesPostCampany";
+const SingleJobDetails = lazy(()=>import("../components/SingleJobDetailsComp/SingleJobMain")) ;
+const CandidatesDashBoard = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesDashBoard")) ;
+const CandidatesMyJob = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesMyJob")) ;
+const CandidatesProfile = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesProfile")) ;
+const CandidatesMessages = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesMessages")) ;
+const CandidatesMeetings = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesMeetings")) ;
+const CandidatesSetting = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidatesSetting")) ;
+const PostJob = lazy(()=>import("@/Dashboard/DashBoardPages/Empolyees/PostJob")) ;
+const ProtectedEmployerRoute = lazy(()=>import("./ProtectedEmployerRoute")) ;
+const ProtectedCandidateRoute = lazy(()=>import("./ProtectedCandidateRoute")) ;
+const MoreFaq = lazy(()=>import("../components/faq/viewMoreFaq/MoreFaq")) ;
+const AdminDashboard = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminDashboard")) ;
+const AdminSetting = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminSetting")) ;
+const AdminCandidate = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminCandidate")) ;
+const AdminEmployees = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminEmployees")) ;
+const AdminNotification = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminNotification"))
+const AdminSectorsAndCategories = lazy(()=>import("@/Dashboard/DashBoardPages/Admins/AdminSectorsAndCategories"))
+const CompaniesMain = lazy(()=>import("../components/companies/CompaniesMain")) ;
+const CompanyDetailMain = lazy(()=>import("../components/companyDetail/CompanyDetailMain")) ;
+const CandidatesMain = lazy(()=>import("../components/candidates/CandidatesMain")) ;
+const CandidateProfileMain = lazy(()=>import("../components/candidateProfile/CandidateProfileMain"));
+const ResetPassword = lazy(()=>import("../components/password/ResetPassword"));
+const CandidateNcsPage = lazy(()=>import("@/Dashboard/DashBoardPages/Candidates/CandidateNcsPage"));
+const EmpolyesJobPost = lazy(()=>import("@/Dashboard/DashboardComponents/Empolyees/AllJob/EmpolyesJobPost"));
+const EmployeesPostCampany = lazy(()=>import("@/Dashboard/DashboardComponents/Empolyees/AllCompany/EmployeesPostCampany"));
+const Singlepage = lazy(()=>import("@/src/components/shemesBlogsComp/SinglePageBlogAndShemes"))
 import { IoSettingsOutline } from "react-icons/io5";
 // ================ 👇 importing component with LAZY 👇  =====================
 
@@ -50,21 +51,25 @@ const ContactUs = lazy(() => import("../pages/ContactUs"));
 const Schems = lazy(() => import("../pages/Schems"));
 const PostAJob = lazy(() => import("../pages/PostAJob"));
 const Jobs = lazy(() => import("../pages/Jobs"));
-// const SingleJobDetails = lazy(() => import("../pages/SingleJobDetails"));
 const FoundersNote = lazy(() => import("../pages/FoundersNote"));
-import { FaFonticons } from "react-icons/fa";
 import { GrUserManager } from "react-icons/gr";
 import { IoBagOutline } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaVectorSquare } from "react-icons/fa";
 import { FaNewspaper } from "react-icons/fa"
-import { MdOutlineContactPage } from "react-icons/md";
 import { LuMessageSquare } from "react-icons/lu";
 import { TbBrandZoom } from "react-icons/tb";
 import { HiOutlineHomeModern } from "react-icons/hi2";
 import { CiLink } from "react-icons/ci";
-import AdminArticle from "@/Dashboard/DashBoardPages/Admins/AdminArticle";
-import EmpolyeesPostMeeting from "@/Dashboard/DashboardComponents/Empolyees/EmpolyeesMeeting/EmpolyeesPostMeeting";
+const AdminArticle = lazy(() => import("@/Dashboard/DashBoardPages/Admins/AdminArticle"));
+const EmpolyeesPostMeeting = lazy(() => import("@/Dashboard/DashboardComponents/Empolyees/EmpolyeesMeeting/EmpolyeesPostMeeting"));
+const ProfileBasicFormEdit = lazy(() => import("@/Dashboard/DashboardComponents/Candidates/CandidateProfile/ProfileForms/ProfileBasicFormEdit"));
+const ProfileDisabilityFormAdd = lazy(() => import("@/Dashboard/DashboardComponents/Candidates/CandidateProfile/ProfileForms/ProfileDisabilityFormAdd"));
+const ProfileEducationFormAdd = lazy(() => import("@/Dashboard/DashboardComponents/Candidates/CandidateProfile/ProfileForms/ProfileEducationFormAdd"));
+const ProfileExperienceFormAdd = lazy(() => import("@/Dashboard/DashboardComponents/Candidates/CandidateProfile/ProfileForms/ProfileExperienceFormAdd"));
+const AdminLogin = lazy(() => import("../components/logIn/logInCompo/AdminLogin"));
+
+
 // ================ 👆 importing component with LAZY 👆 =====================
 
 const Router = ({ children }) => {
@@ -84,19 +89,19 @@ const Router = ({ children }) => {
       icon: <IoBagOutline />,
       route: "employees"
     },
-    {
-      name: "Notifications",
-      icon: <IoMdNotificationsOutline />,
-      route: "notifications"
-    },
+    // {
+    //   name: "Notifications",
+    //   icon: <IoMdNotificationsOutline />,
+    //   route: "notifications"
+    // },
     {
       name: "Categories & Sectors ",
-      icon:  <FaVectorSquare />,
+      icon: <FaVectorSquare />,
       route: "sectors&categories"
     },
     {
       name: "Articles ",
-      icon:<FaNewspaper />,
+      icon: <FaNewspaper />,
       route: "articles"
     },
 
@@ -107,11 +112,11 @@ const Router = ({ children }) => {
       icon: <IoBagOutline />,
       route: "job"
     },
-    {
-      name: "Messages",
-      icon: <LuMessageSquare />,
-      route: "messages"
-    },
+    // {
+    //   name: "Messages",
+    //   icon: <LuMessageSquare />,
+    //   route: "messages"
+    // },
 
     {
       name: "Meetings",
@@ -147,11 +152,11 @@ const Router = ({ children }) => {
       icon: <GrUserManager />,
       route: "profile"
     },
-    {
-      name: "Messages",
-      icon: <LuMessageSquare />,
-      route: "messages"
-    },
+    // {
+    //   name: "Messages",
+    //   icon: <LuMessageSquare />,
+    //   route: "messages"
+    // },
     {
       name: "Meetings",
       icon: <TbBrandZoom />,
@@ -185,11 +190,13 @@ const Router = ({ children }) => {
           {/* ############################## */}
           <Route path={"schemes"} element={<Schems />} />
           <Route path={"blogs"} element={<Blogs />} />
+          <Route path={"blogsone/:id"} element={<Singlepage />} />
           <Route path={"contact"} element={<ContactUs />} />
           <Route path={"about"} element={<AboutUs />} />
           <Route path={"postJob"} element={<PostAJob />} />
           <Route path={"founder"} element={<FoundersNote />} />
           <Route path={"resetPassword"} element={<ResetPassword />} />
+          <Route path={"admin-login"} element={<AdminLogin/>} />
         </Route>
         {/* employers Routing ############ */}
         <Route element={<ProtectedEmployerRoute />}>
@@ -229,6 +236,10 @@ const Router = ({ children }) => {
             <Route index element={<CandidatesDashBoard />} />
             <Route path={"job"} element={<CandidatesMyJob />} />
             <Route path={"profile"} element={<CandidatesProfile />} />
+            <Route path={"profileEdit"} element={<ProfileBasicFormEdit />} />
+            <Route path={"addDisability"} element={<ProfileDisabilityFormAdd />} />
+            <Route path={"addEducation"} element={<ProfileEducationFormAdd />} />
+            <Route path={"addExperience"} element={<ProfileExperienceFormAdd />} />
             <Route path={"messages"} element={<CandidatesMessages />} />
             <Route path={"meetings"} element={<CandidatesMeetings />} />
             <Route path={"setting"} element={<CandidatesSetting />} />
@@ -253,7 +264,6 @@ const Router = ({ children }) => {
             <Route path={"notifications"} element={< AdminNotification />} />
             <Route path={"setting"} element={< AdminSetting />} />
             <Route path={"articles"} element={< AdminArticle />} />
-
             <Route path={"sectors&categories"} element={< AdminSectorsAndCategories />} />
           </Route>
         </Route>

@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { FaRegHeart } from "react-icons/fa6";
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import axiosInstance from '@/src/utils/axiosConfig';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import Loader from "../../GlobalComponents/Loader"
 const CandidteWishlist = () => {
   const [allWishList, setAllWishList] = useState([])
+  const [loading, setLoading] = useState(false)
   const AllWishList = async () => {
-    const res = await axiosInstance.get(`/candidate/job/wishlist`);
-    setAllWishList(res.data.data);
+    try {
+      setLoading(true)
+      const res = await axiosInstance.get(`/candidate/job/wishlist`);
+      setAllWishList(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+ 
   }
   useEffect(() => {
     AllWishList()
   }, [])
   const RemovewishList = async (id) => {
     try {
+      setLoading(true)
       const res = await axiosInstance.delete(`/candidate/job/wishlist/${id}`);
       // console.log(res);
       if (res.data.status === "success") {
@@ -34,6 +44,8 @@ const CandidteWishlist = () => {
         title: "Oops...",
         text: "Something went wrong!",
       });
+    } finally {
+      setLoading(false)
     }
   }
   // console.log(allWishList);
@@ -42,9 +54,12 @@ const CandidteWishlist = () => {
     <div className='flex flex-col gap-5'>
       <>
         {allWishList.length === 0 ? (
-          <div className='flex justify-center'>
-            <Link to={"/jobs"} className='text-xl'> Add <span className='text-divyang'>WishList</span>  </Link>
-          </div>
+          <>
+            {loading && <Loader />}
+            <div className='flex justify-center'>
+              <Link to={"/jobs"} className='text-xl'> Add <span className='text-divyang'>WishList</span>  </Link>
+            </div>
+          </>
         ) : (
           <>
             {allWishList.map((Whis) => (

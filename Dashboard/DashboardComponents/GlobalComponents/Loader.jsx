@@ -4,7 +4,7 @@ const Loaser = () => {
 
   return (
     <div className=' grid mx-auto w-full h-full z-50'>
-    <div id="loder" >
+    <div id="loder">
       <span></span><span></span><span></span><span></span>
     </div>
     </div>
