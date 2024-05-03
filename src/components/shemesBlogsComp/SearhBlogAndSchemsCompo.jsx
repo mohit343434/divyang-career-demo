@@ -6,7 +6,7 @@ const SearchBlogAndSchemsCompo = () => {
     <>
       <div className="flex justify-center px-5 mt-8">
         <form className="w-full max-w-xl">
-          <section className="flex items-center border-[1px]  ">
+          {/* <section className="flex items-center border-[1px]  ">
             <input
               className=" bg-transparent focus:ring-0 border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
               type="text"
@@ -19,14 +19,14 @@ const SearchBlogAndSchemsCompo = () => {
             >
               Search
             </button>
-          </section>
+          </section> */}
         </form>
       </div>
       <div className="flex flex-col justify-center mx-7 ">
         <p className="text-xl font-semibold mt-4">Category</p>
         <div className=" flex flex-col">
-          <Link to="/" className="mt-6 hover:text-divyang  ">Blog</Link>
-          <Link to="/" className="mt-4  hover:text-divyang">Schemes</Link>
+          <Link to="/blogs" className="mt-6 hover:text-divyang  ">Blog</Link>
+          <Link to="/schemes" className="mt-4  hover:text-divyang">Schemes</Link>
         </div>
         <div className="mt-4">
           <p className="font-semibold text-xl pb-4">Tags</p>

@@ -149,7 +149,7 @@ const JobsCard = () => {
                     <Sheet className=''>
                         <div className='flex justify-between gap-36'>
                             <SheetTrigger className='flex items-center'>Filte <CiFilter className='text-xl' /></SheetTrigger>
-                            <span className='flex items-center gap-1' onClick={clearFilters}>Clear All <RxCross1 /></span>
+                            {/* <span className='flex items-center gap-1' onClick={clearFilters}>Clear All <RxCross1 /></span> */}
                         </div>
                         <SheetContent className="w-[300px] sm:w-[400px] overflow-scroll ">
                             <SheetHeader>
@@ -278,7 +278,7 @@ const JobsCard = () => {
                             )}
                         </PaginationItem>
                         {currentPage > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-                        {Array.from({ length: totalPages }, (_, i) => {
+                        {Array.from({ length: totalPages -1 }, (_, i) => {
                             if (i >= currentPage - 1 && i <= currentPage + 1) {
                                 return (
                                     <PaginationItem key={i + 1}>
@@ -313,8 +313,6 @@ const JobsCard = () => {
                         </PaginationItem>
                     </PaginationContent>
                 </Pagination>
-
-
             </div>
         </div>
     );
@@ -322,165 +320,3 @@ const JobsCard = () => {
 
 export default JobsCard;
 
-
-// import React, { useEffect, useState } from 'react';
-// import { FaRegHeart } from "react-icons/fa6";
-// import { Card } from '@/components/ui/card';
-// import { Badge } from '@/components/ui/badge';
-// import axiosInstance from '@/src/utils/axiosConfig';
-// import { Link, useNavigate } from 'react-router-dom';
-// import Swal from 'sweetalert2';
-
-// import {
-//     Tooltip,
-//     TooltipContent,
-//     TooltipProvider,
-//     TooltipTrigger,
-// } from "@/components/ui/tooltip"
-// import { Button } from '@/components/ui/button';
-// import { useAuth } from '@/src/context/AuthContext';
-
-// const JobsCard = () => {
-//     const [jobs, setJobs] = useState([]);
-//     const [auth] = useAuth();
-//     const [categories, setCategories] = useState([]);
-//     const [selectedCategories, setSelectedCategories] = useState({});
-//     const history = useNavigate(); // Initialize useHistory
-
-//     const getAllJobs = async () => {
-//         try {
-//             const res = await axiosInstance.get("/homepage/job");
-//             setJobs(res.data.job);
-//             // Extract categories from jobs and remove duplicates
-//             const allCategories = Array.from(new Set(res.data.job.map(job => job?.category?.name)));
-//             setCategories(allCategories);
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     };
-
-//     const AddWishList = async (id) => {
-//         try {
-//             if (auth.token) {
-//                 const res = await axiosInstance.post(`/candidate/job/wishlist`, {
-//                     jobId: id
-//                 })
-//                 if (res.data.status === "success") {
-//                     Swal.fire({
-//                         position: "top-end",
-//                         title: "Added to wishlist",
-//                         icon: "success",
-//                         showConfirmButton: false,
-//                         timer: 1500
-//                     });
-//                 }
-//             } else {
-//                 Swal.fire({
-//                     icon: "error",
-//                     title: "Sorry",
-//                     text: "Please Login",
-//                 });
-//             }
-//         } catch (error) {
-//             Swal.fire({
-//                 icon: "error",
-//                 title: "Already Added",
-//                 text: "Please check My Jobs section!",
-//             });
-//         }
-//     };
-
-//     useEffect(() => {
-//         getAllJobs();
-//     }, []);
-
-//     const handleCategoryChange = (category) => {
-//         setSelectedCategories(prevState => ({
-//             ...prevState,
-//             [category]: !prevState[category] // Toggle the checkbox state
-//         }));
-//     };
-
-//     const isCategorySelected = (category) => selectedCategories[category];
-
-//     const filteredJobs = jobs.filter(job => {
-//         // If no categories are selected, return true for all jobs
-//         if (Object.values(selectedCategories).every(value => !value)) {
-//             return true;
-//         }
-
-//         // Filter jobs based on selected categories
-//         return Object.entries(selectedCategories).some(([cat, isSelected]) =>
-//             isSelected && job.category?.name === cat
-//         );
-//     });
-
-//     return (
-//         <div className='flex justify-center gap-10 min-w-80'>
-//             <div className="">
-//                 {categories.map((category, index) => (
-//                     <label key={index} className="flex items-center">
-//                         <input
-//                             type="checkbox"
-//                             checked={isCategorySelected(category)}
-//                             onChange={() => handleCategoryChange(category)}
-//                         />
-
-//                         <span className="ml-2">{category}</span>
-//                     </label>
-//                 ))}
-//             </div>
-//             <div className='flex flex-col gap-5'>
-//                 {filteredJobs.length === 0 ? (
-//                     <div>
-//                         <h1 className='text-3xl font-bold text-center'>No Jobs Found</h1>
-//                     </div>
-//                 ) : (
-//                     <>
-//                         {filteredJobs.map((job, index) => (
-//                             <Card key={index} className='border-orange-500 p-5  flex flex-col w-full '>
-//                                 <div>
-//                                     <div className='flex justify-between items-center'>
-//                                         <Link to={`/jobs/${job?._id}`}>
-//                                             <h3 className="text-lg font-bold hover:text-divyang">{job?.title}</h3>
-//                                         </Link>
-//                                         <TooltipProvider>
-//                                             <Tooltip>
-//                                                 <TooltipTrigger asChild>
-//                                                     <div className='outline-none bg-white border-none hover:bg-white ' onClick={() => AddWishList(job?._id)} >
-//                                                         <Button variant="outline" >
-//                                                             <FaRegHeart className='hover:text-orange-500 text-xl cursor-pointer' />
-//                                                         </Button>
-//                                                     </div>
-//                                                 </TooltipTrigger>
-//                                                 <TooltipContent>
-//                                                     <p>Add to WishList</p>
-//                                                 </TooltipContent>
-//                                             </Tooltip>
-//                                         </TooltipProvider>
-//                                     </div>
-//                                     <p className="font-medium text-divyang">{job?.companyId?.name}</p>
-//                                 </div>
-//                                 <div className='flex gap-2 pt-3'>
-//                                     <Badge className='bg-[#f5ecff] text-[#8369c7] '>{job?.type}</Badge>
-//                                     <Badge className='bg-[#f5ecff] text-[#8369c7] '>{job?.category?.name || "All Categories"}</Badge>
-//                                     <Badge className='bg-[#d9eaf5] text-divyang'>{job?.qualification || "Education Necessary"}</Badge>
-//                                     <Badge className='bg-[#d9eaf5] text-divyang'>{`${job?.salary} ₹/Month` || "Based on Experience"}</Badge>
-//                                 </div>
-//                                 <div className='flex justify-between pt-5 items-center'>
-//                                     {/* <p className="text-sm text-gray-700 text-divyang">{job?.description}</p> */}
-//                                     <p className="text-sm text-[#8369c7]">{job?.timeline || "Job expiring soon, Apply now"}</p>
-//                                     <Link to={`/jobs/${job?._id}`}>
-//                                         <Button className="bg-divyang">Apply Now</Button>
-//                                     </Link>
-//                                 </div>
-//                             </Card>
-//                         ))}
-//                     </>
-//                 )}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default JobsCard;

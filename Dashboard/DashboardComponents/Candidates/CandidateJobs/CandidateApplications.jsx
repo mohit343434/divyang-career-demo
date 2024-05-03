@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SelectOption } from "../../GlobalComponents/SelectOption";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+
 import {
   Table,
   TableBody,
@@ -12,12 +10,21 @@ import {
 } from "@/components/ui/table";
 import axiosInstance from "@/src/utils/axiosConfig";
 import { Link } from "react-router-dom";
-
+import Loader from "../../GlobalComponents/Loader"
 const CandidateApplications = () => {
   const [allApply, setAllApply] = useState([])
+  const [loading, setLoading] = useState(false)
   const getAllApply = async () => {
-    const res = await axiosInstance.get(`/candidate/job/applicant`);
-    setAllApply(res.data.data);
+    try {
+      setLoading(true)
+      const res = await axiosInstance.get(`/candidate/job/applicant`);
+      setAllApply(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+ 
   }
   useEffect(() => {
     getAllApply()
@@ -39,6 +46,7 @@ const CandidateApplications = () => {
           <TableBody>
             {
               allApply.length === 0 ? (<>
+                {loading && <Loader/> }
                 <div className='flex justify-center'>
                   <Link to={"/jobs"} className='text-xl'> Apply <span className='text-divyang'>Job</span>  </Link>
                 </div>
@@ -48,6 +56,7 @@ const CandidateApplications = () => {
                     return (
                       <>
                         <TableRow>
+                         
                           <TableCell className="font-bold text-black ">
                             <div className="w-28 whitespace-nowrap overflow-hidden text-ellipsis">
                               {e?.jobId?.title}

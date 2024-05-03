@@ -210,101 +210,11 @@ const ProfileEducationForm = () => {
   return (
     <>
 
-      <Dialog open={dialogOpen} close={true}>
-        <DialogTrigger>
+     <a href="/dashboard/candidates/addEducation">
           <Button className=' bg-divyang rounded-full ' onClick={() => setDialogOpen(true)}>Add Education</Button>
-        </DialogTrigger>
-        <DialogContent close={true} className="w-full md:w-[350px]">
-          <div className="flex justify-center items-center flex-col gap-2 max-w-[300px] overflow-y-auto">
-            <div className="flex justify-between items-center gap-9">
-              <h1 className="text-xl font-bold ">Add Education </h1>
-              {/* <RxCross2 onClick={() => setDialogOpen(false)} /> */}
-            </div>
-            <form onSubmit={handleAddEducation}>
-              <div className="flex w-full lg:flex-nowrap flex-wrap">
-                <div className="w-full p-2">
-                  <label>
-                    Title <span className="text-divyang">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-md border-1 focus:border-none mt-2"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="w-full p-2">
-                  <label>
-                    Level of Education{' '}
-                    <span className="text-divyang">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-md border-1 focus:border-none mt-2"
-                    placeholder="Level of Education"
-                    value={level}
-                    onChange={(e) => setLevel(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex w-full lg:flex-nowrap flex-wrap">
-                <div className="w-full p-2">
-                  <label>
-                    From <span className="text-divyang">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-md border-1 focus:border-none mt-2"
-                    value={from}
-                    onChange={(e) => setFrom(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="w-full p-2">
-                  <label>
-                    To <span className="text-divyang">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-md border-1 focus:border-none mt-2"
-                    value={to}
-                    onChange={(e) => setTo(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex w-full lg:flex-nowrap flex-wrap">
-                <div className="w-full p-2">
-                  <label>
-                    Description{' '}
-                    <span className="text-divyang">*</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    className="w-full rounded-md border-1 focus:border-none mt-2"
-                    placeholder="description"
-                    rows="5"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="w-full p-2 flex justify-center gap-7 items-center">
-
-                <DialogClose onClick={() => setDialogOpen(true)}>
-                  <Button >Submit</Button>
-                </DialogClose>
-
-                <Button className='' variant="destructive" onClick={() => setDialogOpen(false)}>Cancel</Button>
-              </div>
-            </form>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </a>
+          
+       
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
         {
           education.map((edu) => {

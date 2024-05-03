@@ -1,24 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
-// import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+// import {
+//     Card,
+//     CardContent,
+// } from "@/components/ui/card"
+// import {
+//     Tabs,
+//     TabsContent,
+//     TabsList,
+//     TabsTrigger,
+// } from "@/components/ui/tabs"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -26,55 +19,29 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-const components = [
-    {
-        title: "Alert Dialog",
-        href: "/docs/primitives/alert-dialog",
-    },
-    {
-        title: "Hover Card",
-        href: "/docs/primitives/hover-card",
-    },
-    {
-        title: "Progress",
-        href: "/docs/primitives/progress",
-    },
-    // {
-    //     title: "Scroll-area",
-    //     href: "/docs/primitives/scroll-area",
-    // },
-    // {
-    //     title: "Tabs",
-    //     href: "/docs/primitives/tabs",
-    // },
-    // {
-    //     title: "Tooltip",
-    //     href: "/docs/primitives/tooltip",
-    // },
-];
-function ListItem({ className, title, children, ...props }) {
-    return (
-        <li>
-            <NavigationMenuLink asChild>
-                <a
-                    className={cn(
-                        "block select-none rounded-md leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-                        className
-                    )}
-                    {...props}
-                >
-                    <div className="text-sm font-medium leading-none">{title}</div>
-                    <p className="text-sm leading-snug text-muted-foreground">
-                        {children}
-                    </p>
-                </a>
-            </NavigationMenuLink>
-        </li>
-    );
-}
-ListItem.displayName = "ListItem";
+
+// function ListItem({ className, title, children, ...props }) {
+//     return (
+//         <li>
+//             <NavigationMenuLink asChild>
+//                 <a
+//                     className={cn(
+//                         "block select-none rounded-md leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+//                         className
+//                     )}
+//                     {...props}
+//                 >
+//                     <div className="text-sm font-medium leading-none">{title}</div>
+//                     <p className="text-sm leading-snug text-muted-foreground">
+//                         {children}
+//                     </p>
+//                 </a>
+//             </NavigationMenuLink>
+//         </li>
+//     );
+// }
+// ListItem.displayName = "ListItem";
 export default function NavigationMenuDemo() {
     return (
         /* lg screen menu st ##################  */
@@ -101,7 +68,6 @@ export default function NavigationMenuDemo() {
                         Schemes
                     </NavLink>
                 </NavigationMenuItem>
-          
                 <NavigationMenuItem>
                     <NavLink to="/blogs" className="ml-4 text-white hover:text-divyang">
                         Blog

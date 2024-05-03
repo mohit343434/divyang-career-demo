@@ -36,8 +36,8 @@ import {
 } from "@/components/ui/dialog"
 const Navbar = () => {
     const [auth, setAuth] = useAuth();
-    const userData = JSON.parse(localStorage.getItem("user"))
-    const userName = !userData ? "" : userData.firstName
+    // const userData = JSON.parse(localStorage.getItem("user"))
+    // const userName = !userData ? "" : userData.firstName
     const handleLogout = () => {
         setAuth({
             ...auth,
@@ -46,7 +46,6 @@ const Navbar = () => {
         });
         localStorage.removeItem("auth");
         localStorage.removeItem("user");
-        toast.success("Logout Successfully");
     };
 
     return (
@@ -73,14 +72,21 @@ const Navbar = () => {
                                         <LogInMain />
                                     </DialogContent>
                                 </Dialog>
-                                <Link to='/postJob'>
-                                    <Button className='text-primary bg-background hover:bg-input ' >Post a Job </Button>
-                                </Link>
+                                <Dialog>
+                                    <DialogTrigger>
+                                        <div className='h-9 rounded-md items-center justify-center text-center bg-white flex '>
+                                            <span className='text-black  mx-4    bg-white'>Post a Job</span>
+                                        </div>
+                                    </DialogTrigger>
+                                    <DialogContent className="w-[440px]">
+                                        <LogInMain />
+                                    </DialogContent>
+                                </Dialog>
                             </>
                         ) : (
                             <div className='flex items-center gap-5'>
                                 <DropdownMenu >
-                                    <DropdownMenuTrigger className='text-white flex items-center justify-center gap-3'><img src={profilePic} height={40} width={40} className='rounded-[50%]' /><div className='flex items-center '>{userName}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
+                                    <DropdownMenuTrigger className='text-white flex items-center justify-center gap-3'><div className='flex items-center '>{auth?.user?.username}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
                                     <DropdownMenuContent className='p-5 w-64'>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
@@ -115,20 +121,20 @@ const Navbar = () => {
                             </SheetTrigger>
                             <SheetContent className="overflow-scroll" >
                                 <SheetClose asChild>
-                                    <Link to="/schemes" className="bg-white ms-3 text-black hover:text-divyang hover:bg-white text-lg" >Schemes</Link>
+                                    <Link to="/schemes" className="bg-white ms-3 text-black hover:text-divyang hover:bg-white text-lg">Schemes</Link>
                                 </SheetClose> <br />
                                 <SheetClose asChild>
-                                    <Link to="/blogs" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white text-lg"  >Blog</Link>
+                                    <Link to="/blogs" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white text-lg">Blog</Link>
                                 </SheetClose>
                                 <Accordion type="single" collapsible className="w-full">
                                     <AccordionItem value="item-1">
-                                        <AccordionTrigger><Button className="bg-white  mt-3 ml-[-11px] text-lg font-bold text-black hover:text-divyang hover:bg-white "  >Company</Button></AccordionTrigger>
+                                        <AccordionTrigger><Button className="bg-white ms-3  ml-[-11px] text-lg font-bold text-black hover:text-divyang hover:bg-white">Company</Button></AccordionTrigger>
                                         <AccordionContent>
                                             <SheetClose asChild>
-                                                <Link to="/about" className="bg-white ms-3  text-black hover:text-divyang hover:bg-white "  >About Us</Link>
+                                                <Link to="/about" className="bg-white ms-3 text-lg  text-black hover:text-divyang hover:bg-white">About Us</Link>
                                             </SheetClose> <br />
                                             <SheetClose asChild>
-                                                <Link to="/founder" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white "  >Founder’s Note</Link>
+                                                <Link to="/founder" className="bg-white ms-3 text-lg mt-3 text-black hover:text-divyang hover:bg-white">Founder’s Note</Link>
                                             </SheetClose>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -137,9 +143,9 @@ const Navbar = () => {
                                     <Link to="/jobs" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white text-lg"  >Job</Link >
                                 </SheetClose> <br />
                                 <SheetClose asChild>
-                                    <Link to="/contact" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white text-lg "  >Contact Us</Link >
+                                    <Link to="/contact" className="bg-white ms-3 mt-3 text-black hover:text-divyang hover:bg-white text-lg">Contact Us</Link >
                                 </SheetClose><br />
-                                
+
                                 {!auth?.user ? (
 
                                     <>
@@ -156,7 +162,7 @@ const Navbar = () => {
 
                                         </SheetClose> <br /> <br />
                                     </>) : (<DropdownMenu >
-                                        <DropdownMenuTrigger className=' flex items-center justify-center gap-3 pt-5 mb-5'><img src={profilePic} height={40} width={40} className='rounded-[50%]' /><div className='flex items-center '>{userName}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
+                                        <DropdownMenuTrigger className=' flex items-center justify-center gap-3 pt-5 mb-5'><img src={profilePic} height={40} width={40} className='rounded-[50%]' /><div className='flex items-center '>{auth?.user?.username}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
                                         <DropdownMenuContent className='p-5 w-64'>
                                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
@@ -165,7 +171,7 @@ const Navbar = () => {
                                             </Link>
                                             <DropdownMenuItem className='text-base'>Profile</DropdownMenuItem>
                                             <NavLink onClick={handleLogout} to='/'>
-                                                <DropdownMenuItem className='text-base' >
+                                                <DropdownMenuItem className='text-base'>
                                                     Logout
                                                 </DropdownMenuItem>
                                             </NavLink>
@@ -173,9 +179,17 @@ const Navbar = () => {
                                     </DropdownMenu>
                                 )}
                                 <SheetClose asChild>
-                                    <Link to='postJob'>
-                                        <Button className="bg-divyang w-32 rounded-3xl text-white hover:text-white hover:bg-divyang "  >Post Job</Button>
-                                    </Link>
+                                    <Dialog>
+                                        <DialogTrigger>
+                                            <div className='flex bg-divyang rounded-lg'>
+                                            <Button className="bg-divyang text-white rounded-lg hover:text-divyang text-lg" >Post Job</Button>
+                                            </div>
+                                            {/* <Link className='text-white '>Sign </Link> */}
+                                        </DialogTrigger>
+                                        <DialogContent className="w-[440px]">
+                                            <LogInMain />
+                                        </DialogContent>
+                                    </Dialog>
                                 </SheetClose> <br />
                             </SheetContent>
                         </Sheet>

@@ -6,11 +6,11 @@ import ResetPassword from './ResetPassword';
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/AuthContext";
 import Swal from 'sweetalert2'
 import axiosInstance from '../../../utils/axiosConfig';
-
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 import {
   Dialog,
   DialogContent,
@@ -19,19 +19,20 @@ import {
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth();
+  const [ loading , setLoadin] =  useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoadin(true)
       const res = await axiosInstance.post("/auth/login", {
         email,
         password,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data.status === "success") {
         setAuth({
           ...auth,
@@ -58,9 +59,8 @@ const Login = () => {
         navigate('/dashboard/employers');
         return
       }
-      console.log(res.data.user.role)
+      // console.log(res.data.user.role)
     } catch (error) {
-      console.log(error);
       if (error.response.status === 401) {
         Swal.fire({
           position: "top-end",
@@ -70,6 +70,8 @@ const Login = () => {
           timer: 2500
         });
       }
+    }finally{
+      setLoadin(false)
     }
   };
 
@@ -77,6 +79,7 @@ const Login = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
+      {loading && <Loader/>}
           <div>
             <Label htmlFor="name">Email</Label>
             <Input
@@ -118,10 +121,7 @@ const Login = () => {
             </Dialog>
           </div>
           <Button className="w-full border-orange-500 border-2 text-white bg-orange-500 hover:bg-white hover:text-orange-500 rounded-3xl">Sign In</Button>
-          <div className='flex flex-col items-center'>
-            <span className='text-center'>Or continue with</span>
-            <span className='text-center text-red-700 text-4xl'><AiFillGoogleCircle /></span>
-          </div>
+          
         </div>
       </form>
     </div>

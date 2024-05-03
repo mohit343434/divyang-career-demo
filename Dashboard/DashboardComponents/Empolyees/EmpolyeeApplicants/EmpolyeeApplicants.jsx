@@ -29,25 +29,11 @@ const EmpolyeeApplicants = () => {
   const Applicants = async () => {
     const res = await axiosInstance.get(`employer/job/${id}/applicant`);
     setAllApplicants(res.data.data);
+    console.log(res);
   }
-  // const re = async()=>{
-  //   var headers = new Headers();
-  //   headers.append("X-CSCAPI-KEY", "YkRKVnJoWklSaWI0THhzYzBtSmdsdVl0MEw3b2NkemdZdUFhbWs3QQ==");
-
-  //   var requestOptions = {
-  //    method: 'GET',
-  //    headers: headers,
-  //    redirect: 'follow'
-  //   };
-
-  //   fetch("https://api.countrystatecity.in/v1/countries/IN/cities", requestOptions)
-  //   .then(response => response.json())
-  //   .then(result => console.log(result))
-  //   .catch(error => console.log('error', error));
-  // }
+ 
   useEffect(() => {
     Applicants()
-    // re()
   }, [refaresh])
   const handleUpdate = async (applicantNo, status) => {
     // console.log('Applicant No:', applicantNo, 'Status:', status);

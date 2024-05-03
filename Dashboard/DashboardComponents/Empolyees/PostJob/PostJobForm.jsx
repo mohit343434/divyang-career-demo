@@ -19,7 +19,7 @@ const PostJobForm = () => {
   const [Dateis, setDate] = useState()
   const [ loading , setLoading ] = useState(false)
 
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("user"));
   // console.log(user);
   const getProfile = async () => {
     const res = await axiosInstance.get(`/employer/profile`);

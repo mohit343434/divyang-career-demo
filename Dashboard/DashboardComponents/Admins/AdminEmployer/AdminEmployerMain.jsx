@@ -137,7 +137,7 @@ const AdminEmployerMain = () => {
               )}
             </PaginationItem>
             {currentPage > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-            {Array.from({ length: totalPages }, (_, i) => {
+            {Array.from({ length: totalPages -1 }, (_, i) => {
               if (i >= currentPage - 1 && i <= currentPage + 1) {
                 return (
                   <PaginationItem key={i + 1}>

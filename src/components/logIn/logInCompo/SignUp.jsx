@@ -5,10 +5,10 @@ import { Label } from "@/components/ui/label"
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
 import Swal from 'sweetalert2'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/src/context/AuthContext';
 import axiosInstance from '../../../utils/axiosConfig';
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 
 
 const SignUp = () => {
@@ -23,17 +23,16 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const [auth, setAuth] = useAuth();
-
-
+  const [loading , setLoading ] = useState(false)
 
   const handleOptionChange = (event) => {
     setRole(event.target.value);
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true)
       const res = await axiosInstance.post("/auth/signup", {
         firstName,
         lastName,
@@ -44,15 +43,12 @@ const SignUp = () => {
         role,
       });
       if (res.data.status === "success") {
-        console.log("auth");
         setAuth({
           ...auth,
           user: res.data.user,
           token: res.data.token,
         });
       }
-
-      console.log("Sign Up sucessfully");
       console.log(res)
 
       localStorage.setItem("auth", JSON.stringify(res.data.accessToken))
@@ -79,16 +75,9 @@ const SignUp = () => {
         });
         return
       }
-      // if (res.data.status === "success") {
-      //   setAuth({
-      //     ...auth,
-      //     user: res.data.user,
-      //     token: res.data.token,
-      //   });
 
 
     } catch (error) {
-      console.log(error);
       if (error.response.status === 400) {
         Swal.fire({
           position: "top-end",
@@ -99,6 +88,8 @@ const SignUp = () => {
         });
       }
 
+    }finally{
+      setLoading(false)
     }
     if (!phone.match(/^[0-9]{10}$/)) {
       Swal.fire({
@@ -119,13 +110,12 @@ const SignUp = () => {
         showConfirmButton: false,
         timer: 2500
       });
-
-
     }
   };
   return (
     <div className='max-h-[500px] overflow-y-auto ' >
       <form onSubmit={handleSubmit}>
+      {loading && <Loader/>}
         <div className='flex flex-col gap-2 '>
           <div className='flex gap-2'>
             <Label className={`flex items-center rounded-md cursor-pointer px-4 py-2 border ${role === 'candidate' ? 'bg-divyang text-white' : 'bg-gray-200 text-gray-700'}`}>

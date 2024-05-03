@@ -34,18 +34,18 @@ const SettingComponent = () => {
                 <Label htmlFor="password">Current password</Label>
                 <div className="relative">
                   <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter Current password"
-                    className="outline-none"
+                    id="Npassword"
+                    type={showPassword ? "text" : "Npassword"}
+                    placeholder="Enter New Current"
+
                   />
                   <span
                     className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
                     onClick={() => {
-                      setShowPassword(!showPassword);
+                      setShowPassword(!showNPassword);
                     }}
                   >
-                    {showPassword ? <IoMdEyeOff /> : <IoEye />}
+                    {showNPassword ? <IoMdEyeOff /> : <IoEye />}
                   </span>
                 </div>
               </div>
@@ -56,6 +56,7 @@ const SettingComponent = () => {
                     id="Npassword"
                     type={showPassword ? "text" : "Npassword"}
                     placeholder="Enter New password"
+
                   />
                   <span
                     className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
