@@ -22,7 +22,7 @@ const EmployeesPostCampany = () => {
   const [gallery, setGallery] = useState([])
   const [loading, setLoading] = useState(false);
   const getSector = async () => {
-    const res = await axiosInstance.get("/admin/sector");
+    const res = await axiosInstance.get("/homepage/sector");
     setAllSector(res.data.data);
   }
   useEffect(() => {
