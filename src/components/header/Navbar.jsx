@@ -173,6 +173,7 @@ const Navbar = () => {
                                             <NavLink onClick={handleLogout} to='/'>
                                                 <DropdownMenuItem className='text-base'>
                                                     Logout
+                                                    
                                                 </DropdownMenuItem>
                                             </NavLink>
                                         </DropdownMenuContent>
