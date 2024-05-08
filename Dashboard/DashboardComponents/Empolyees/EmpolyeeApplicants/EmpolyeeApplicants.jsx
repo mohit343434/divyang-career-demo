@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { TbMessageCircle2Filled } from "react-icons/tb";
+// import { TbMessageCircle2Filled } from "react-icons/tb";
 import { BiLogoZoom } from "react-icons/bi";
 import {
   Table,
@@ -21,17 +21,27 @@ const EmpolyeeApplicants = () => {
   const [refaresh, setReafresh] = useState(1)
   const [id] = useState(new URLSearchParams(location.search).get("id"));
   const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [loading2, setLoading2] = useState(false)
+  // const navigate = useNavigate()
   const Title = {
     title: "All applicants",
   };
 
+  // console.log(loading);
   const Applicants = async () => {
-    const res = await axiosInstance.get(`employer/job/${id}/applicant`);
-    setAllApplicants(res.data.data);
-    console.log(res);
+    try {
+      setLoading2(true)
+      const res = await axiosInstance.get(`employer/job/${id}/applicant`);
+      setAllApplicants(res.data.data);
+      // console.log(res, "ff");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading2(false)
+    }
+
   }
- 
+
   useEffect(() => {
     Applicants()
   }, [refaresh])
@@ -46,10 +56,10 @@ const EmpolyeeApplicants = () => {
       if (res.status === 200) {
         Swal.fire({
           title: "Good job!",
-          text: "You clicked the button!",
+          // text: "You clicked the button!",
           icon: "success"
         });
-        navigate("/dashboard/employers/meetings")
+        // navigate("/dashboard/employers/meetings")
       }
 
     } catch (error) {
@@ -57,7 +67,6 @@ const EmpolyeeApplicants = () => {
         icon: "error",
         title: "Oops...",
         text: "Something went wrong!",
-        footer: '<a href="#">Why do I have this issue?</a>'
       });
     } finally {
       setLoading(false)
@@ -103,15 +112,15 @@ const EmpolyeeApplicants = () => {
                         allApplicants.map((app, i) => {
                           return (
                             <>
-                              {loading && <Loader />}
-                              {console.log(app)}
                               <TableRow key={i}>
                                 <TableCell > <span className="font-bold text-black"> Mohit Jaiswal</span> <br />
+                                  {loading2 && <Loader />}
                                   <span>{app.totalyears === "" ? app.totalyears : " Not updated profile"} </span>
+                                  {loading && <Loader />}
                                 </TableCell>
                                 <TableCell>
                                   <select className="mt-1 border-none rounded-md shadow-sm focus:border-none focus:ring-0 focus:ring-info-50 focus:ring-opacity-0"
-                                    onChange={(e) =>handleUpdate(app.applicantNo, e.target.value) }
+                                    onChange={(e) => handleUpdate(app.applicantNo, e.target.value)}
                                     defaultValue={app.status}>
                                     <option className="bg-gray-100" value={"sent"} >Padding</option>
                                     <option className="bg-gray-100" value={"shortlisted"} >Shortlisted</option>
@@ -128,13 +137,13 @@ const EmpolyeeApplicants = () => {
                                 </TableCell>
                                 <TableCell >
                                   <div className='flex text-2xl'>
-                                    <div>
+                                    {/* <div>
                                       <TbMessageCircle2Filled className=' text-blue-600 cursor-pointer' />
-                                    </div>
+                                    </div> */}
                                     {" "}
                                     <div>
                                       <Link to={`/dashboard/employers/post-meeting?id=${app?.candidateId?._id}`}>
-                                      <BiLogoZoom className=' ml-5 text-3xl text-blue-600 cursor-pointer' />
+                                        <BiLogoZoom className=' ml-5 text-3xl text-blue-600 cursor-pointer' />
                                       </Link>
                                     </div>
                                   </div>
@@ -147,9 +156,6 @@ const EmpolyeeApplicants = () => {
                     </>
                   )
                 }
-
-
-
               </TableBody>
             </Table>
           </div>

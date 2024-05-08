@@ -28,7 +28,7 @@ const EmpolyesJobPost = () => {
     getallCompny()
   }, [])
   const getSecter = async () => {
-    const res = await axiosInstance.get(`/admin/sector`);
+    const res = await axiosInstance.get(`/homepage/sector`);
     setAllSecter(res.data.data);
   }
   //  get all company 
@@ -39,7 +39,7 @@ const EmpolyesJobPost = () => {
   }
   //  get all Categories form admin side  
   const getCategories = async () => {
-    const res = await axiosInstance.get(`/admin/category`);
+    const res = await axiosInstance.get(`/homepage/category?page=1&limit=100`);
     setAllCategories(res.data.data);
   }
   //  send time change date 
@@ -50,8 +50,9 @@ const EmpolyesJobPost = () => {
   //  post a job 
   const postJob = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
+    
+      setLoading(true);
       const res = await axiosInstance.post(`/employer/company/${Company}/job`, {
         title: title,
         type: type,
@@ -66,7 +67,6 @@ const EmpolyesJobPost = () => {
         endDate: endDate
       });
       // console.log(res);
-
       if (res.status === 200) {
         navigate("/dashboard/employers/job")
         Swal.fire({

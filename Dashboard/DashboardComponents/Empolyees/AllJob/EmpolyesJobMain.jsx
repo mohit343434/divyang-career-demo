@@ -24,14 +24,19 @@ const EmpolyesJobMain = () => {
   };
   //  get all job
   const getAllJob = async () => {
-    const res = await axiosInstance.get(`/employer/profile/job${filter}`);
-    setJobName(res.data.data);
+    try { 
+      setLoading(true)
+      const res = await axiosInstance.get(`/employer/profile/job${filter}`);
+      setJobName(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
   }
   useEffect(() => {
     getAllJob()
   }, [filter])
-
-
 
 
   //  creacted job date change in india forment  
@@ -134,8 +139,8 @@ const EmpolyesJobMain = () => {
             </select>
           </div>
         </div>
-        <div className='mt-3 '  >
-          <div className='p-5 ' >
+        <div className='mt-3'>
+          <div className='p-5'>
 
             <Table className="border bg-white"  >
               <TableHeader>

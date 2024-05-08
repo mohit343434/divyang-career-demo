@@ -62,15 +62,22 @@ const CompanyTable = () => {
 
   //  Get all company 
   const getAllCompany = async () => {
-    const res = await axiosInstance.get("/employer/profile/company");
-    setAllCompany(res.data.message);
+    try {
+      setLoading(true)
+      const res = await axiosInstance.get("/employer/profile/company");
+      setAllCompany(res.data.message);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+   
 
   }
   // Delete comppant usi id 
   const HandelDelete = async (id) => {
     const confirmed = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
@@ -192,8 +199,8 @@ const CompanyTable = () => {
                     {
                       allCompany.map((e) => {
                         return (<>
-                        {loading && <Loder/>}
                           <TableRow key={e?.id} >
+                        {loading && <Loder/>}
                             <TableCell className="font-bold text-black">{e?.name} </TableCell>
                             <TableCell> <span className="text-divyang">{e?.sector?.name}</span></TableCell>
                             <TableCell>{e?.email}</TableCell>

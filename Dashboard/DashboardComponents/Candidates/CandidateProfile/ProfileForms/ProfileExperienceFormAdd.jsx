@@ -2,11 +2,11 @@ import React, {  useState } from "react";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 
 const ProfileExperienceFormAdd = () => {
-  
+  const navigate = useNavigate();
     const [jobtitle, setJobtitle] = useState('');
     const [company, setCompany] = useState('');
     const [from, setFrom] = useState('');
@@ -25,7 +25,7 @@ const ProfileExperienceFormAdd = () => {
   
     const handleAddExperience = async (event) => {
       event.preventDefault();
-  
+      navigate('/dashboard/candidates/profile');
   
       try {
         if (!jobtitle || !company || !from || !to || !description) {
@@ -58,7 +58,7 @@ const ProfileExperienceFormAdd = () => {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Education added successfully.',
+            title: 'Experience added successfully.',
             showConfirmButton: false,
             timer: 1500
           });
@@ -67,6 +67,7 @@ const ProfileExperienceFormAdd = () => {
           setFrom("")
           setTo("")
           setCompany("")
+          
          
         }
       } catch (error) {
@@ -156,17 +157,13 @@ const ProfileExperienceFormAdd = () => {
                   />
                 </div>
               </div>
-              <div className=" flex justify-center items-center w-full p-2 ">
-             
-                  <Button className="w-1/2">Submit</Button>
-                
-                 
-               
+              <div className="  w-full p-2 ">
+                  <Button className=" bg-orange-500 hover:bg-orange-500">Submit</Button>
               </div>
             </form>
-            <div className="p-2 flex w-full  justify-center items-center">
-            <Link to="/dashboard/candidates/profile">
-              <Button  className=" w-[400px] bg-orange-500">Cancel</Button>
+            <div className="p-2 ">
+            <Link to="/dashboard/candidates/profile" className=" underline" style={{ color: "#0000FF" }}>
+             Cancel
               </Link>
             </div>
             </div>

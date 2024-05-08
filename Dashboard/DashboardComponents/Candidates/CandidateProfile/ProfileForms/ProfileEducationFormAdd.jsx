@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-
+import { Link, useNavigate} from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
 
 const ProfileEducationFormAdd = () => {
-
+  const navigate = useNavigate();
     const [title, setTitle] = useState('');
   const [level, setLevel] = useState('');
   const [from, setFrom] = useState('');
@@ -25,7 +25,7 @@ const ProfileEducationFormAdd = () => {
 
   const handleAddEducation = async (event) => {
     event.preventDefault();
-
+    navigate('/dashboard/candidates/profile');
     try {
         if (!title || !level || !from || !to || !description) {
           // If any required field is empty, return early without submitting
@@ -77,10 +77,10 @@ const ProfileEducationFormAdd = () => {
     
   return (
     <div>
-     <div className="flex  gap-2 max-w-[300px] overflow-y-auto">
+     <div className=" max-w-[300px] overflow-y-auto">
      <div className=" p-5">
      <h1 className="text-xl font-bold mb-3">Add Education </h1>
-            <div className=" p-5 flex justify-between items-center gap-9  border bg-slate-100">
+            <div className=" p-5  justify-between items-center gap-9  border bg-slate-100">
              
            
             <form onSubmit={handleAddEducation}>
@@ -156,16 +156,15 @@ const ProfileEducationFormAdd = () => {
                   />
                 </div>
               </div>
-              <div className="w-full p-2 flex gap-5">
-
-
-               
-                  <Button className="w-full" >Submit</Button>
-               
-
-               
+              <div className="  w-full p-2 ">
+                  <Button className=" bg-orange-500 hover:bg-orange-500">Submit</Button>
               </div>
             </form>
+            <div className="p-2 ">
+            <Link to="/dashboard/candidates/profile"  className=" underline" style={{ color: "#0000FF" }}>
+             Cancel
+              </Link>
+            </div>
             </div>
             </div>
           </div>

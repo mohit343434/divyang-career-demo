@@ -7,9 +7,12 @@ import axiosInstance from '@/src/utils/axiosConfig';
 
 const EmpolyeesMeetingMain = () => {
   const [allMeeting, setAllMeeting] = useState([])
+  const [allPassMeeting, setAllpassMeeting] = useState([])
   const getAllUpcomingMeeting = async () => {
-    const res = await axiosInstance.get(`/employer/meeting`)
-    setAllMeeting(res.data.data);
+    const res = await axiosInstance.get(`/employer/meeting/status`)
+    setAllMeeting(res.data.data.upcomingMeeting);
+    setAllpassMeeting(res.data.data.pastMeeting);
+    console.log(res.data);
   }
   useEffect(() => {
     getAllUpcomingMeeting()
@@ -78,7 +81,7 @@ const EmpolyeesMeetingMain = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.getMonth() + 1; // Month is zero-based
+    const month = date.getMonth() + 1; 
     const year = date.getFullYear();
     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
   };
@@ -133,19 +136,37 @@ const EmpolyeesMeetingMain = () => {
           </div>
         </TabsContent>
         <TabsContent value="Completed" className="w-full">
-          <div className='flex flex-row gap-5 justify-center flex-wrap'  >
-            {/* <hr /> */}
+        <div className='flex flex-row gap-5 justify-center flex-wrap'>
             {
-              data2.map((e, i) => <MeetingsCard
-                key={i}
-                date={e.date}
-                phone={e.phone}
-                email={e.email}
-                expired={e.jobheading}
-                name={e.name}
-                desc={e.desc}
-                meetingTime={e.meetingTime} />)
+              allMeeting.length === 0 ? (<>
+              <div>
+              <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
+              </div>
+              </>):(
+                <>
+                  {
+              allPassMeeting.map((e, i) => {
+                return(
+                  <MeetingsCard
+                  key={i}
+                  date={formatDate(e.date)}
+                  email={e?.candidateId?.jobEmail}
+                  phone={e?.candidateId?.jobPhone}
+                  expired={e?.isActive==true ?"Upcoming":"Expired"}
+                  name={e?.meetingLink}
+                  desc={e?.isActive==false ? e.cancellationReason :null}
+                  starttime={e?.startTime}
+                  endTime={e?.endTime}
+                   />
+                )
+              }
+              
+             )
             }
+                </>
+              )
+            }
+          
           </div>
         </TabsContent>
       </Tabs>
