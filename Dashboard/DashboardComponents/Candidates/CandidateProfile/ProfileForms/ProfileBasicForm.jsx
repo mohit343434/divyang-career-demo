@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/src/utils/axiosConfig";
 import { CiEdit } from "react-icons/ci";
-
+import { Link, useNavigate} from "react-router-dom";
 
 const ProfileBasicForm = () => {
   const [categories, setCategories] = useState()
@@ -66,11 +66,11 @@ const ProfileBasicForm = () => {
         <div>
           <div className="flex justify-between">
             <label className="pt-3 text-2xl">Basic info</label>
-
-            <a href="/dashboard/candidates/profileEdit" >
-              <CiEdit className="text-3xl cursor-pointer" />
-            </a>
-
+          
+            <Link to="/dashboard/candidates/profileEdit" >
+  <CiEdit className="text-3xl cursor-pointer" />
+</Link>
+             
           </div>
         </div>
         <div>

@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SelectOption } from "../../../GlobalComponents/SelectOption";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { Link} from "react-router-dom";
 import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
-import axiosInstance from "@/src/utils/axiosConfig";
+
 import fileAxiosInstance from "@/src/utils/fileConfig";
 import Swal from "sweetalert2";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
+
 import {
   Accordion,
   AccordionContent,
@@ -170,9 +164,11 @@ const ProfileDisabilityForm = () => {
   console.log(disabilitiInfo)
   return (
     <>
-    <a href="/dashboard/candidates/addDisability">
+    <div className="mb-5">
+    <Link to="/dashboard/candidates/addDisability">
           <Button className=' bg-divyang rounded-full '>Add Disability</Button>
-          </a> 
+          </Link> 
+          </div>
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
 
         <>

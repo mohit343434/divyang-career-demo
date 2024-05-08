@@ -24,14 +24,14 @@ const LeftSideJobDetails = ({ jobDetails }) => {
                         title: "Good job!",
                         text: "You have Apply SuccessFull",
                         icon: "success"
-                      });
+                    });
                 }
             } else {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Please Login!",
-                  });
+                });
             }
         } catch (error) {
             if (error.response.data.status === "fail") {
@@ -39,9 +39,9 @@ const LeftSideJobDetails = ({ jobDetails }) => {
                     icon: "error",
                     title: "Oops...",
                     text: "you have already applied",
-                  }); 
+                });
             }
-          
+
         }
     }
 
@@ -54,7 +54,7 @@ const LeftSideJobDetails = ({ jobDetails }) => {
                 <p>by  <span className='text-divyang'>{jobDetails?.companyId?.name}</span></p>
             </div>
 
-            <div className='flex gap-2  border-b-2 p-5 pt[-10px]'>
+            <div className='flex gap-2  border-b-2 p-5 pt[-10px] flex-wrap'>
                 <Badge className='bg-[#f5ecff] text-[#8369c7]'>{jobDetails.type}</Badge>
                 <Badge className='bg-[#d9eaf5] text-divyang'> {jobDetails?.experience}</Badge>
                 <Badge className='bg-[#d9eaf5] text-[#8369c7]'>{jobDetails?.gender}</Badge>
@@ -62,7 +62,7 @@ const LeftSideJobDetails = ({ jobDetails }) => {
             </div>
             <div className='pt-3 flex flex-col gap-5'>
                 <h2 className='text-divyang font-bold'>Job role insights</h2>
-                <div className='flex gap-5'>
+                <div className='flex gap-5  flex-wrap'>
                     <div className='flex items-center gap-3'>
                         <div className='rounded-[50%] bg-[#d9eaf5]  p-2'>
                             <IoLocationOutline className='text-3xl text-divyang ' />

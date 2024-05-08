@@ -9,23 +9,12 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { DialogClose } from "@radix-ui/react-dialog";
-
+import { Link} from "react-router-dom";
 
 const ProfileExperienceForm = () => {
 
-  //states 
-  const [jobtitle, setJobtitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [description, setDescription] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
+  
+
 
   // State for storing education data
   const [education, setEducation] = useState([])
@@ -46,58 +35,7 @@ const ProfileExperienceForm = () => {
   };
 
 
-  const handleAddExperience = async (event) => {
-    event.preventDefault();
-
-
-    try {
-      if (!jobtitle || !company || !from || !to || !description) {
-        // If any required field is empty, return early without submitting
-        // Show an error message or perform any necessary action
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Please fill the input field",
-        });
-        return;
-      }
-      const formattedFromDate = formatDate(from);
-      const formattedToDate = formatDate(to);
-
-      // ######### 👇👇 Add Education API  👇👇 API############################
-      const res = await axiosInstance.post(
-        '/candidate/profile/experience',
-        {
-          jobtitle,
-          company,
-          from: formattedFromDate,
-          to: formattedToDate,
-          description
-        }
-      );
-      GetData();
-      // console.log(res);
-      if (res.data.status === 'success') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Education added successfully.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        setJobtitle("")
-        setDescription("")
-        setFrom("")
-        setTo("")
-        setCompany("")
-        setDialogOpen(false);
-      }
-    } catch (error) {
-      // Handle error
-      console.log(error);
-    }
-  };
-
+  
   const handleAddEdu = async (event) => {
     event.preventDefault();
 
@@ -149,7 +87,7 @@ const ProfileExperienceForm = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Education updated successfully.",
+          title: "Experience updated successfully.",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -185,7 +123,7 @@ const ProfileExperienceForm = () => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Education deleted successfully.",
+            title: "Experience deleted successfully.",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -211,11 +149,11 @@ const ProfileExperienceForm = () => {
 
   return (
     <>
-
-     <a href="/dashboard/candidates/addExperience">
+<div className="mb-5">
+     <Link to="/dashboard/candidates/addExperience">
           <Button className=' bg-divyang rounded-full ' onClick={() => setDialogOpen(true)}>Add Experience </Button>
-          </a>
-          
+          </Link>
+          </div>    
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
         {
           education?.map((edu) => {

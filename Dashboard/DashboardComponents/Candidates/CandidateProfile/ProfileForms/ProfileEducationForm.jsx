@@ -9,13 +9,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { DialogClose } from "@radix-ui/react-dialog";
-import { RxCross2 } from "react-icons/rx";
+import { Link} from "react-router-dom";
 
 
 const ProfileEducationForm = () => {
@@ -209,11 +203,11 @@ const ProfileEducationForm = () => {
   };
   return (
     <>
-
-     <a href="/dashboard/candidates/addEducation">
+<div className="mb-5">
+     <Link to="/dashboard/candidates/addEducation">
           <Button className=' bg-divyang rounded-full ' onClick={() => setDialogOpen(true)}>Add Education</Button>
-          </a>
-          
+          </Link>
+          </div> 
        
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
         {

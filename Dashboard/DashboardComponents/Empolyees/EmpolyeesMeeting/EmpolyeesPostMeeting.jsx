@@ -1,21 +1,26 @@
 import axiosInstance from '@/src/utils/axiosConfig'
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Loader from "../../GlobalComponents/Loader"
 import Swal from 'sweetalert2'
 
 const EmpolyeesPostMeeting = () => {
   const location = useLocation()
-  const [Date, setDate] = useState("")
+  const [selectedDate, setSelectedDate] = useState("")
   const [startTime, setStartTime] = useState("")
   const [endTime, setEndTime] = useState("")
   const [meetingLink, setMeetingLink] = useState("")
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
   const [id] = useState(new URLSearchParams(location.search).get("id"))
+  
+  // Function to format date
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split('-');
-    setDate(`${month}-${day}-${year}`);
+    setSelectedDate(`${month}-${day}-${year}`);
   };
+
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
@@ -24,28 +29,29 @@ const EmpolyeesPostMeeting = () => {
         candidateId: id,
         startTime: startTime,
         endTime: endTime,
-        date: Date,
+        date: selectedDate,
         meetingLink: meetingLink,
       })
-      if (res.status == 200) {
+      if (res.status === 200) {
         Swal.fire({
           title: "Good job!",
           text: "Meeting Created",
           icon: "success"
         });
       }
-      console.log(res);
-
+      navigate(`/dashboard/employers/meetings`)
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false)
     }
-
   }
 
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user);
+
+  // Get today's date
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <div>
       <div className='flex flex-row flex-wrap lg:flex-nowrap'>
@@ -66,7 +72,7 @@ const EmpolyeesPostMeeting = () => {
                 </div>
                 <div className='w-full'>
                   <label className='font-light'>Date <span className='text-divyang'>*</span> </label>
-                  <input type="date" placeholder='Salary' className='w-full h-10 rounded-lg ' required onChange={(e) => formatDate(e.target.value)} />
+                  <input type="date" placeholder='Salary' className='w-full h-10 rounded-lg ' required min={today} onChange={(e) => formatDate(e.target.value)} />
                 </div>
               </div>
               <div className='flex w-full mt-2  gap-3 flex-wrap lg:flex-nowrap'>
@@ -89,7 +95,7 @@ const EmpolyeesPostMeeting = () => {
             <div className='flex flex-col p-5'>
               <div className='border rounded-lg p-3' style={{ background: "#ffff" }}>
                 <p className='text-2xl'>Title of meeting</p>
-                <p>by Organizer Name {user.firstName} </p>
+                <p>by Organizer Name {user.username} </p>
               </div>
             </div>
           </div>

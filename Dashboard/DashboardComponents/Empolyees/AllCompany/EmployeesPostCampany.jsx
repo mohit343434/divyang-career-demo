@@ -5,6 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { MdOutlineFileUpload } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 
 const EmployeesPostCampany = () => {
   const navigate = useNavigate()
@@ -29,54 +30,91 @@ const EmployeesPostCampany = () => {
     getSector()
   }, [])
 
-    // console.log(sectorUpdate);
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('name', companyName);
-      formData.append('phone', phone);
-      formData.append('email', email);
-      formData.append('website', website);
-      formData.append('address', address);
-      formData.append('videoURL', video);
-      formData.append('about', about);
-      formData.append('sector', sector);
-      formData.append('logo', file1);
-      formData.append('coverImage', file);
-      gallery.forEach((file) => {
-        formData.append(`gallery`, file);
-        // console.log(file);
+  // console.log(sectorUpdate);
+  const handleSubmit = async (e) => {
+    console.log(gallery);
+    e.preventDefault()
+    if (!file1 ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Logo and Corver Imgage is requird",
       });
-      try {
-        const res = await fileAxiosInstance.post("/employer/profile/company", formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }
-        )
-        // console.log(res);
-
-        if (res.status === 200) {
-          navigate("/dashboard/employers/company")
-          Swal.fire({
-            title: "Good job!",
-            icon: "success"
-          });
-        }
-      } catch (error) {
-        if (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-          });
-        }
-      }finally {
-        setLoading(false); 
-      }
+      return
     }
+    if (!file ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Logo and Corver Imgage is requird",
+      });
+      return
+    }
+    if (file1.type !== "image/jpeg" && file1.type !== "image/png" ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Image type png and jpeg",
+      });
+      return;
+    }
+    if (file.type !== "image/jpeg" && file.type !== "image/png" ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Image type png and jpeg",
+      });
+      return;
+    }
+
+
+    const formData = new FormData();
+    formData.append('name', companyName);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('website', website);
+    formData.append('address', address);
+    formData.append('videoURL', video);
+    formData.append('about', about);
+    formData.append('sector', sector);
+    formData.append('logo', file1);
+    formData.append('coverImage', file);
+    gallery.forEach((file) => {
+      formData.append(`gallery`, file);
+      // console.log(file);
+    });
+    try {
+      
+      
+      setLoading(true);
+      const res = await fileAxiosInstance.post("/employer/profile/company", formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+      // console.log(res);
+
+      if (res.status === 200) {
+        navigate("/dashboard/employers/company")
+        Swal.fire({
+          title: "Good job!",
+          icon: "success"
+        });
+      }
+    } catch (error) {
+      if (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -135,7 +173,7 @@ const EmployeesPostCampany = () => {
                   {allSector.map((val) => <option key={val.id} value={val.id}>{val.name}</option>)}
                 </select>
               </div>
-
+              {loading && <Loader />}
             </div>
             <div className="flex w-full mt-2 gap-3 lg:flex-nowrap flex-wrap ">
               <div className="rounded-2xl w-full  h-40 object-fit overflow-hidden relative border-dotted border-[0.5px] border-[#8E98A8]">
