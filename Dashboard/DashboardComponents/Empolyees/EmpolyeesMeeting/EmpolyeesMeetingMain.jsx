@@ -4,84 +4,41 @@ import MeetingsCard from '../../GlobalComponents/MeetingsCard'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PageTitle from '../../GlobalComponents/PageTitle';
 import axiosInstance from '@/src/utils/axiosConfig';
-
+import Swal from 'sweetalert2';
+import Loader from "../../GlobalComponents/Loader"
 const EmpolyeesMeetingMain = () => {
   const [allMeeting, setAllMeeting] = useState([])
   const [allPassMeeting, setAllpassMeeting] = useState([])
+  const [loading, setLoading] = useState(0);
   const getAllUpcomingMeeting = async () => {
-    const res = await axiosInstance.get(`/employer/meeting/status`)
-    setAllMeeting(res.data.data.upcomingMeeting);
-    setAllpassMeeting(res.data.data.pastMeeting);
-    console.log(res.data);
+    try {
+      setLoading(true)
+      const res = await axiosInstance.get(`/employer/meeting/status`)
+      setAllMeeting(res.data.data.upcomingMeeting);
+      setAllpassMeeting(res.data.data.pastMeeting);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+      })
+    }finally{
+      setLoading(false)
+    }
+
+
   }
   useEffect(() => {
     getAllUpcomingMeeting()
   }, [])
-  console.log(allMeeting);
- 
-  const data2 = [
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "Coming",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes"
-    },
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "Coming",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes"
-    },
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "Coming",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "30 Minutes"
-    },
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "Coming",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "11 Minutes"
-    },
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "Coming",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes"
-    },
-    {
-      date: "10/01/2024",
-      email: "mjGmail.com",
-      phone: "phone",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes"
-    },
-  ]
+
   const Title = {
     title: "Meeting",
   };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.getMonth() + 1; 
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
   };
@@ -98,75 +55,78 @@ const EmpolyeesMeetingMain = () => {
             Upcoming
           </TabsTrigger>
           <TabsTrigger value="Completed" className="text-xl">
-            Completed
+            Past Meeting
           </TabsTrigger>
         </TabsList>
         <TabsContent value="Upcoming" className="">
           <div className='flex flex-row gap-5 justify-center flex-wrap'>
             {
               allMeeting.length === 0 ? (<>
-              <div>
-              <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
-              </div>
-              </>):(
+                <div>
+                {loading && <Loader/>}
+                  <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
+                </div>
+              </>) : (
                 <>
                   {
-              allMeeting.map((e, i) => {
-                return(
-                  <MeetingsCard
-                  key={i}
-                  date={formatDate(e.date)}
-                  email={e?.candidateId?.jobEmail}
-                  phone={e?.candidateId?.jobPhone}
-                  expired={e?.isActive==true ?"Upcoming":"Expired"}
-                  name={e?.meetingLink}
-                  desc={e?.isActive==false ? e.cancellationReason :null}
-                  starttime={e?.startTime}
-                  endTime={e?.endTime}
-                   />
-                )
-              }
-              
-             )
-            }
+                    allMeeting.map((e, i) => {
+                      return (
+                        <MeetingsCard
+                          key={i}
+                          date={formatDate(e.date)}
+                          email={e?.candidateId?.jobEmail}
+                          phone={e?.candidateId?.jobPhone}
+                          expired={e?.isActive == true ? "Upcoming" : "Expired"}
+                          name={e?.meetingLink}
+                          desc={e?.isActive == false ? e.cancellationReason : null}
+                          starttime={e?.startTime}
+                          endTime={e?.endTime}
+                        />
+                      )
+                    }
+
+                    )
+                  }
                 </>
               )
             }
-          
+
           </div>
         </TabsContent>
         <TabsContent value="Completed" className="w-full">
-        <div className='flex flex-row gap-5 justify-center flex-wrap'>
+          <div className='flex flex-row gap-5 justify-center flex-wrap'>
             {
               allMeeting.length === 0 ? (<>
-              <div>
-              <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
-              </div>
-              </>):(
+                <div>
+                  {loading && <Loader/>}
+                  <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
+                  { }
+                </div>
+              </>) : (
                 <>
                   {
-              allPassMeeting.map((e, i) => {
-                return(
-                  <MeetingsCard
-                  key={i}
-                  date={formatDate(e.date)}
-                  email={e?.candidateId?.jobEmail}
-                  phone={e?.candidateId?.jobPhone}
-                  expired={e?.isActive==true ?"Upcoming":"Expired"}
-                  name={e?.meetingLink}
-                  desc={e?.isActive==false ? e.cancellationReason :null}
-                  starttime={e?.startTime}
-                  endTime={e?.endTime}
-                   />
-                )
-              }
-              
-             )
-            }
+                    allPassMeeting.map((e, i) => {
+                      return (
+                        <MeetingsCard
+                          key={i}
+                          date={formatDate(e.date)}
+                          email={e?.candidateId?.jobEmail}
+                          phone={e?.candidateId?.jobPhone}
+                          expired={e?.isActive == true ? "Upcoming" : "Expired"}
+                          name={e?.meetingLink}
+                          desc={e?.isActive == false ? e.cancellationReason : null}
+                          starttime={e?.startTime}
+                          endTime={e?.endTime}
+                        />
+                      )
+                    }
+
+                    )
+                  }
                 </>
               )
             }
-          
+
           </div>
         </TabsContent>
       </Tabs>

@@ -85,11 +85,15 @@ const CompanyTable = () => {
       confirmButtonText: "Yes, delete it!",
     });
     if (confirmed.isConfirmed) {
-      setLoading(true)
-      await axiosInstance.delete(`/employer/profile/company/${id}`)
-      // console.log(res);
-      setLoading(false)
-      getAllCompany()
+      try {
+        setLoading(true)
+        await axiosInstance.delete(`/employer/profile/company/${id}`)
+        getAllCompany()
+      } catch (error) {
+        console.log(error);
+      }finally{
+        setLoading(false)
+      }
       return
     }
   }
@@ -97,7 +101,6 @@ const CompanyTable = () => {
   const getOneCompny = async (id) => {
     const res = await axiosInstance.get(`/employer/profile/company/${id}`);
     setCompanyNameUpdate(res.data.data.name);
-    // setSectorUpdate(res.data.data.sector.name);
     setWebsiteUpdate(res.data.data.website);
     setPhoneUpdate(res.data.data.phone);
     setEmailUpdate(res.data.data.email);
@@ -191,6 +194,7 @@ const CompanyTable = () => {
                 {allCompany.length === 0 ? (
                   <div className='flex w-full justify-center'>
                     <div>
+                    {loading && <Loder/>}
                       <p className=' my-5 font-medium text-xl'>Please Create <span className='text-divyang'>Campany</span> </p>
                     </div>
                   </div>
@@ -200,9 +204,9 @@ const CompanyTable = () => {
                       allCompany.map((e) => {
                         return (<>
                           <TableRow key={e?.id} >
-                        {loading && <Loder/>}
                             <TableCell className="font-bold text-black">{e?.name} </TableCell>
                             <TableCell> <span className="text-divyang">{e?.sector?.name}</span></TableCell>
+                            {loading && <Loder/>}
                             <TableCell>{e?.email}</TableCell>
                             <TableCell>
                               <div className='flex text-2xl'>
@@ -216,6 +220,7 @@ const CompanyTable = () => {
                                     </DialogHeader>
                                     <div className='max-h-[500px] overflow-y-auto px-2 '>
                                       <form>
+                                        {loading && <Loder/>}
                                         <div className='flex flex-col gap-3'>
                                           <div className='flex flex-col'>
                                             <label className='font-light'>Company name</label>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "@/src/utils/axiosConfig";
 import { CiEdit } from "react-icons/ci";
-import { Link, useNavigate} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import profile from "@/src/assets/th.jpeg"
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 const ProfileBasicForm = () => {
-  const [categories, setCategories] = useState()
   const [TotleYear, setTotleYear] = useState()
   const [firstName, setFirstName] = useState()
   const [email, setEmail] = useState()
@@ -21,12 +21,14 @@ const ProfileBasicForm = () => {
   const [Instagram, setInstagram] = useState()
   const [Youtube, setYoutube] = useState()
   const [file1, setFile1] = useState();
+  const [isLoading, setIsLoading] = useState(false)
 
 
 
 
   const getProfile = async () => {
     try {
+      setIsLoading(true)
       const res = await axiosInstance.get(`/candidate/profile`)
       setFirstName(res?.data?.data?.firstName);
       setDescription(res?.data?.data?.description);
@@ -46,6 +48,8 @@ const ProfileBasicForm = () => {
       // console.log(res.data.data);
     } catch (error) {
       console.log(error);
+    }finally{
+      setIsLoading(false)
     }
   }
   useEffect(() => {
@@ -66,11 +70,9 @@ const ProfileBasicForm = () => {
         <div>
           <div className="flex justify-between">
             <label className="pt-3 text-2xl">Basic info</label>
-          
             <Link to="/dashboard/candidates/profileEdit" >
-  <CiEdit className="text-3xl cursor-pointer" />
-</Link>
-             
+              <CiEdit className="text-3xl cursor-pointer" />
+            </Link>
           </div>
         </div>
         <div>
@@ -81,7 +83,7 @@ const ProfileBasicForm = () => {
             <div className="flex w-full mt-5 lg:flex-nowrap flex-wrap ">
               <div className="rounded-2xl w-40 h-40 object-fit overflow-hidden relative border-dotted border - [0.5px] border-[#8E98A8]">
                 {
-                  file1 === "" ? <img src="https://tse2.mm.bing.net/th?id=OIP.6UhgwprABi3-dz8Qs85FvwHaHa&pid=Api&P=0&h=180" alt="" /> : <img src={`https://divyangcareer.s3.ap-south-1.amazonaws.com/assets/images/user/profile/${file1}`} alt="" />
+                  file1 === "" ? <img src={profile} alt="" /> : <img src={`https://divyangcareer.s3.ap-south-1.amazonaws.com/assets/images/user/profile/${file1}`} alt="" />
                 }
               </div>
             </div>
@@ -134,6 +136,7 @@ const ProfileBasicForm = () => {
               </label>
               <p className="mt-1 text-gray-400">{formatDate(age)}</p>
             </div>
+          {isLoading && <Loader/>}
 
           </div>
           <div className="flex w-full mt-5 lg:flex-nowrap flex-wrap">

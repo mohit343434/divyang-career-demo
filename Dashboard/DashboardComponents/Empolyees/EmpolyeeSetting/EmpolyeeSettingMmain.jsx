@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import SettingComponent from '../../GlobalComponents/SettingComponent'
 import PageTitle from '../../GlobalComponents/PageTitle';
 import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 import { Card } from '@/components/ui/card';
@@ -10,6 +9,7 @@ import { IoEye } from 'react-icons/io5';
 import { Button } from '@/components/ui/button';
 import axiosInstance from '@/src/utils/axiosConfig';
 import Swal from 'sweetalert2';
+import Loader2 from "../../GlobalComponents/Loader"
 const EmpolyeeSettingMmain = () => {
   const Title = {
     title: "Settings",
@@ -86,6 +86,7 @@ const EmpolyeeSettingMmain = () => {
           </div>
 
           <form className="flex flex-col justify-start items-start gap-2">
+            {loading && <Loader2/>}
             <div className="flex flex-col gap-4 w-full">
               <div className="w-full">
                 <Label htmlFor="password">Current Password</Label>

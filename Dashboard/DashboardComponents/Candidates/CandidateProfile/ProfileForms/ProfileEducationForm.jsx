@@ -9,104 +9,35 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
-import { Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 
 const ProfileEducationForm = () => {
-  //states 
-  const [title, setTitle] = useState('');
-  const [level, setLevel] = useState('');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [description, setDescription] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  // State for storing education data
   const [education, setEducation] = useState([])
-  //FOrmtting date
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split('-');
-    return `${month}-${day}-${year}`;
-  };
-
+  const [ loading , setLoading] = useState(false)
   const formatDateForInput = (isoDateString) => {
     const date = new Date(isoDateString);
     const year = date.getFullYear();
     const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
     const day = `${date.getDate()}`.padStart(2, '0');
-
-    // Return the formatted date string in 'YYYY-MM-DD' format
     return `${year}-${month}-${day}`;
   };
-
-
-  const handleAddEducation = async (event) => {
-    event.preventDefault();
-
-
-    try {
-      if (!title || !level || !from || !to || !description) {
-        // If any required field is empty, return early without submitting
-        // Show an error message or perform any necessary action
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Please fill the input field",
-        });
-        return;
-      }
-      const formattedFromDate = formatDate(from);
-      const formattedToDate = formatDate(to);
-
-      // ######### 👇👇 Add Education API  👇👇 API############################
-      const res = await axiosInstance.post(
-        '/candidate/profile/education',
-        {
-          title,
-          level,
-          from: formattedFromDate,
-          to: formattedToDate,
-          description
-        }
-      );
-      GetData();
-      // console.log(res);
-      if (res.data.status === 'success') {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Education added successfully.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-        setTitle("")
-        setDescription("")
-        setFrom("")
-        setTo("")
-        setLevel("")
-        setDialogOpen(false);
-      }
-    } catch (error) {
-      // Handle error
-      console.log(error);
-    }
-  };
-
   const handleAddEdu = async (event) => {
     event.preventDefault();
-
   };
 
   // ######### 👇👇 Get ALL Education 👇👇 API############################
   const GetData = async () => {
     try {
+      setLoading(true)
       const response = await axiosInstance.get(`/candidate/profile/education`);
       setEducation(response.data.allEducation);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   }
-  console.log(education);
   useEffect(() => {
     GetData()
   }, [])
@@ -117,11 +48,7 @@ const ProfileEducationForm = () => {
 
   const handleUpdate = async (id) => {
     try {
-      // id.preventDefault();
-      // Find the education item to be updated
       const updatedEducation = education.find((item) => item.id === id);
-
-      // Make sure all fields are filled
       if (!updatedEducation.title || !updatedEducation.level || !updatedEducation.from || !updatedEducation.to || !updatedEducation.description) {
         Swal.fire({
           icon: "error",
@@ -132,11 +59,11 @@ const ProfileEducationForm = () => {
       }
 
       // Make API call to update education
+      setLoading(true)
       const res = await axiosInstance.put(
         `/candidate/profile/education/${id}`,
         updatedEducation
       );
-      console.log(res)
       // Check if update was successful
       if (res.data.status === "sucesss") {
         Swal.fire({
@@ -151,6 +78,8 @@ const ProfileEducationForm = () => {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   };
   //##################### 👆👆  Update education 👆👆 #########################
@@ -171,6 +100,7 @@ const ProfileEducationForm = () => {
     // If user confirmed the deletion
     if (confirmed.isConfirmed) {
       try {
+        setLoading(true)
         const res = await axiosInstance.delete(
           `/candidate/profile/education/${id}`
         );
@@ -183,10 +113,16 @@ const ProfileEducationForm = () => {
             timer: 1500,
           });
           // Fetch updated education data after deletion
-          GetData();
+          GetData()
         }
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        })
+      }finally{
+        setLoading(false)
       }
     }
   };
@@ -203,16 +139,18 @@ const ProfileEducationForm = () => {
   };
   return (
     <>
-<div className="mb-5">
-     <Link to="/dashboard/candidates/addEducation">
-          <Button className=' bg-divyang rounded-full ' onClick={() => setDialogOpen(true)}>Add Education</Button>
-          </Link>
-          </div> 
-       
+      <div className="mb-5">
+        <Link to="/dashboard/candidates/addEducation">
+          <Button className=' bg-divyang rounded-full '>Add Education</Button>
+        </Link>
+      </div>
+      {loading && <Loader/>}
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
         {
           education.map((edu) => {
             return (
+              <>
+              {loading && <Loader/>}
               <form onSubmit={handleAddEdu} key={edu.id} className="w-full p-6">
                 <div className="flex items-center justify-between">
                   <label className="pt-3 text-2xl">Education info</label>
@@ -331,6 +269,7 @@ const ProfileEducationForm = () => {
                   </div>
                 </div>
               </form>
+              </>
             )
           })
         }

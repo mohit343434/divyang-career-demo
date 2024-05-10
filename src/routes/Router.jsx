@@ -61,6 +61,9 @@ import { LuMessageSquare } from "react-icons/lu";
 import { TbBrandZoom } from "react-icons/tb";
 import { HiOutlineHomeModern } from "react-icons/hi2";
 import { CiLink } from "react-icons/ci";
+import AddArticle from "@/Dashboard/DashboardComponents/Admins/AdminArticle/AdminArticleCompo/AddArticle";
+import UpdateArticle from "@/Dashboard/DashboardComponents/Admins/AdminArticle/AdminArticleCompo/UpdateArticle";
+const PageNot = lazy(() => import("../components/PageNotFound/PageNot"));
 const AdminArticle = lazy(() => import("@/Dashboard/DashBoardPages/Admins/AdminArticle"));
 const EmpolyeesPostMeeting = lazy(() => import("@/Dashboard/DashboardComponents/Empolyees/EmpolyeesMeeting/EmpolyeesPostMeeting"));
 const ProfileBasicFormEdit = lazy(() => import("@/Dashboard/DashboardComponents/Candidates/CandidateProfile/ProfileForms/ProfileBasicFormEdit"));
@@ -180,6 +183,7 @@ const Router = ({ children }) => {
         <Route path="/" element={<AppLayout />}>
           <Route index path="/" element={<HomePage />} />
           <Route path={"faqs"} element={<MoreFaq />} />
+          <Route path={"*"} element={<PageNot />} />
           {/* ############################## */}
           <Route path={"jobs"} element={<Jobs />} />
           <Route path={"jobs/:id"} element={<SingleJobDetails />} />
@@ -264,6 +268,8 @@ const Router = ({ children }) => {
             <Route path={"notifications"} element={< AdminNotification />} />
             <Route path={"setting"} element={< AdminSetting />} />
             <Route path={"articles"} element={< AdminArticle />} />
+            <Route path={"addArticles"} element={< AddArticle />} />
+            <Route path={"updateArticle"} element={< UpdateArticle />} />
             <Route path={"sectors&categories"} element={< AdminSectorsAndCategories />} />
           </Route>
         </Route>

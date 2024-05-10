@@ -10,7 +10,7 @@ import MessageBy from "../components/messageBy/MessageBy";
 import LatestBlogs from "../components/latestBlogs/LatestBlogs";
 import Faq from "../components/faq/Faq";
 import JobCards from "../components/ExploreJobs/JobCards";
-import ProtectedEmployerRoute from "../routes/ProtectedEmployerRoute";
+// import ProtectedEmployerRoute from "../routes/ProtectedEmployerRoute";
 // import ProtectedRoute from "../routes/ProtectedRoute";
 
 const HomePage = () => {
@@ -19,7 +19,7 @@ const HomePage = () => {
       <HeroSection />
       <SearchSection />
       <JobCards />
-      <ProtectedEmployerRoute />
+      {/* <ProtectedEmployerRoute /> */}
       <RegisterBanner />
       <BrowseJobByCat />
       <Organizations />

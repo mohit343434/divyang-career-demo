@@ -54,20 +54,29 @@ const ShemesMain = () => {
     <>
       <div className='flex justify-between flex-wrap lg:flex-nowrap md:py-12'>
         <div className='flex flex-wrap justify-center gap-6 px-5' >
-          {loadding && <Loader />}
+
           {
-            schems.map((item, index) => (
-              <ShemesBlogProps
-                key={index}
-                img={item?.image}
-                blog={item?.type}
-                date={formatDate(item?.createdAt)}
-                hadding={convertHtmlToText(item?.title)}
-                subhadding={convertHtmlToText(item?.description)}
-                linkToNavigation={item?._id}
-              />
-            ))
+            schems.length === 0 ? (<>
+              {loadding && <Loader />}
+            </>) : (
+              <>
+                {
+                  schems.map((item, index) => (
+                    <ShemesBlogProps
+                      key={index}
+                      img={item?.image}
+                      blog={item?.type}
+                      date={formatDate(item?.createdAt)}
+                      hadding={convertHtmlToText(item?.title)}
+                      subhadding={convertHtmlToText(item?.description)}
+                      linkToNavigation={item?._id}
+                    />
+                  ))
+                }
+              </>
+            )
           }
+
 
           <Pagination>
             <PaginationContent className="flex flex-wrap justify-center">
@@ -88,7 +97,7 @@ const ShemesMain = () => {
                 )}
               </PaginationItem>
               {currentPage > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-              {Array.from({ length: totalPages }, (_, i) => {
+              {Array.from({ length: totalPages - 1 }, (_, i) => {
                 if (i >= currentPage - 1 && i <= currentPage + 1) {
                   return (
                     <PaginationItem key={i + 1}>
