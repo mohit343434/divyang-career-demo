@@ -7,9 +7,9 @@ import axiosInstance from '@/src/utils/axiosConfig';
 
 
 const AdminDashboardMain = () => {
-  const [job, setJob] = useState()
-  const [employer, setEmployer] = useState()
-  const [candidate, setCandidate] = useState()
+  const [job, setJob] = useState(0)
+  const [employer, setEmployer] = useState(0)
+  const [candidate, setCandidate] = useState(0)
 
   const JOBS = [
     {

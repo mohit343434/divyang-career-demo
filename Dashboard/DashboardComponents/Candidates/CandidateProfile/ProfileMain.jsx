@@ -26,7 +26,7 @@ const ProfileMain = () => {
     console.log(res.data.profileStrength)
 
   }
-  console.log(percentage);
+  // console.log(percentage);
   useEffect(() => {
     profileStrength();
   }, []);
@@ -37,7 +37,6 @@ const ProfileMain = () => {
       <div className="w-full">
         <PageTitle Title={Title} />
       </div>
-
       <div className="flex justify-between items-start flex-wrap lg:flex-nowrap w-full">
         <Tabs className="w-full md:w-1/5 " defaultValue={"Basic"}>
           <TabsList className="w-full overflow-auto bg-transparent">
@@ -91,7 +90,6 @@ const ProfileMain = () => {
                 pathTransitionDuration: 0.5,
                 pathColor: `#f88, ${percentage / 100})`,
                 textColor: "black",
-                // trailColor: "#f88",
                 backgroundColor: "#f88",
               })}
             />

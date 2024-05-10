@@ -10,7 +10,7 @@ const SingleJobMain = () => {
         try {
             const res = await axiosInstance.get(`/homepage/job/${id}`);
             setSingleJob(res.data.data);
-
+            console.log(res);
         } catch (error) {
             console.log(error);
         }

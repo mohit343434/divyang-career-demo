@@ -10,32 +10,23 @@ import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
 import { Link} from "react-router-dom";
-
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 const ProfileExperienceForm = () => {
-
-  
-
-
-  // State for storing education data
   const [education, setEducation] = useState([])
-  //FOrmtting date
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split('-');
-    return `${month}-${day}-${year}`;
-  };
+  const [loading, setLoading] = useState(false)
+  // const formatDate = (dateString) => {
+  //   const [year, month, day] = dateString.split('-');
+  //   return `${month}-${day}-${year}`;
+  // };
 
   const formatDateForInput = (isoDateString) => {
     const date = new Date(isoDateString);
     const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, '0'); // Months are zero-based
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
     const day = `${date.getDate()}`.padStart(2, '0');
-
-    // Return the formatted date string in 'YYYY-MM-DD' format
     return `${year}-${month}-${day}`;
   };
 
-
-  
   const handleAddEdu = async (event) => {
     event.preventDefault();
 
@@ -44,14 +35,17 @@ const ProfileExperienceForm = () => {
   // ######### 👇👇 Get ALL Education 👇👇 API############################
   const GetData = async () => {
     try {
+      setLoading(true)
       const response = await axiosInstance.get(`/candidate/profile/experience`);
       setEducation(response.data.allExperience);
       console.log(response)
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false)
     }
   }
-  console.log(education);
+  // console.log(education);
   useEffect(() => {
     GetData()
   }, [])
@@ -75,13 +69,12 @@ const ProfileExperienceForm = () => {
         });
         return;
       }
-
-      // Make API call to update education
+      setLoading(true)
       const res = await axiosInstance.put(
         `/candidate/profile/experience/${id}`,
         updatedEducation
       );
-      console.log(res)
+      // console.log(res)
       // Check if update was successful
       if (res.data.status === "sucesss") {
         Swal.fire({
@@ -96,6 +89,9 @@ const ProfileExperienceForm = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setLoading(false)
     }
   };
   //##################### 👆👆  Update education 👆👆 #########################
@@ -116,6 +112,7 @@ const ProfileExperienceForm = () => {
     // If user confirmed the deletion
     if (confirmed.isConfirmed) {
       try {
+        setLoading(true)
         const res = await axiosInstance.delete(
           `/candidate/profile/experience/${id}`
         );
@@ -132,6 +129,8 @@ const ProfileExperienceForm = () => {
         }
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false)
       }
     }
   };
@@ -155,10 +154,16 @@ const ProfileExperienceForm = () => {
           </Link>
           </div>    
       <div className="flex flex-col w-full" style={{ background: "#fafafa" }}>
+    {
+      education.length === 0 ?(<>
+      {loading && <Loader/>}
+      <p>Update Profile </p>
+      </>):(<>
         {
           education?.map((edu) => {
             return (
               <form onSubmit={handleAddEdu} key={edu.id} className="w-full p-6">
+                {loading && <Loader/>}
                 <div className="flex items-center justify-between">
                   <label className="pt-3 text-2xl">Experience info</label>
                   <div>
@@ -266,7 +271,8 @@ const ProfileExperienceForm = () => {
                                 value={edu.description}
                                 // onChange={(e) => setDescription(e.target.value)}
                                 onChange={(e) => handleInputChange(e, edu.id, "description")}
-                              />
+                                />
+                                {loading && <Loader/>}
                             </div>
                           </div>
                           <Button onClick={() => handleUpdate(edu.id)}>update</Button>
@@ -279,6 +285,10 @@ const ProfileExperienceForm = () => {
             )
           })
         }
+      </>)
+    }
+
+       
       </div>
 
     </>

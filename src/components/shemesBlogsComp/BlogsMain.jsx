@@ -32,14 +32,14 @@ const ShemesBlogsMain = () => {
       setTotalPages(respons.data.totalPages);
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setLoadding(false)
     }
   }
   // console.log(allBlogs);
   useEffect(() => {
     getAllBlogs();
-  }, []);
+  }, [currentPage]);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   }
@@ -54,17 +54,15 @@ const ShemesBlogsMain = () => {
           {
             allBlogs.length === 0 ? (<>
               <div>
+                {loadding && <Loader />}
                 <p>No blogs found</p>
               </div>
             </>) : (<>
-            {
-              loadding && <Loader/>
-            }
               {
-                allBlogs.map((item , i) => {
+                allBlogs.map((item, i) => {
                   return (
                     <ShemesBlogProps
-                    key={i}
+                      key={i}
                       img={item?.image}
                       blog={item?.type}
                       date={formatDate(item?.createdAt)}
@@ -77,12 +75,10 @@ const ShemesBlogsMain = () => {
               }
             </>)
           }
-           <Pagination>
+          <Pagination>
             <PaginationContent className="flex flex-wrap justify-center">
               <PaginationItem>
-                {
-                  currentPage === 1 ? null : <PaginationPrevious className="cursor-pointer" onClick={() => handlePageChange(currentPage - 1)} />
-                }
+                {currentPage === 1 ? null : <PaginationPrevious className="cursor-pointer" onClick={() => handlePageChange(currentPage - 1)} />}
               </PaginationItem>
               <PaginationItem>
                 {currentPage === 1 ? null : (
@@ -96,7 +92,7 @@ const ShemesBlogsMain = () => {
                 )}
               </PaginationItem>
               {currentPage > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
-              {Array.from({ length: totalPages-1 }, (_, i) => {
+              {Array.from({ length: totalPages - 1 }, (_, i) => {
                 if (i >= currentPage - 1 && i <= currentPage + 1) {
                   return (
                     <PaginationItem key={i + 1}>

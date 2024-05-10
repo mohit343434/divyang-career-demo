@@ -1,90 +1,84 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axiosInstance from "../../../../../src/utils/axiosConfig";
 import Swal from "sweetalert2";
-import { Link, useNavigate} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 
 const ProfileExperienceFormAdd = () => {
   const navigate = useNavigate();
-    const [jobtitle, setJobtitle] = useState('');
-    const [company, setCompany] = useState('');
-    const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
-    const [description, setDescription] = useState('');
-   
-    //FOrmtting date
-    const formatDate = (dateString) => {
-      const [year, month, day] = dateString.split('-');
-      return `${month}-${day}-${year}`;
-    };
-  
-    
-  
-  
-  
-    const handleAddExperience = async (event) => {
-      event.preventDefault();
-      navigate('/dashboard/candidates/profile');
-  
-      try {
-        if (!jobtitle || !company || !from || !to || !description) {
-          // If any required field is empty, return early without submitting
-          // Show an error message or perform any necessary action
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please fill the input field",
-          });
-          return;
-        }
-        const formattedFromDate = formatDate(from);
-        const formattedToDate = formatDate(to);
-  
-        // ######### 👇👇 Add Education API  👇👇 API############################
-        const res = await axiosInstance.post(
-          '/candidate/profile/experience',
-          {
-            jobtitle,
-            company,
-            from: formattedFromDate,
-            to: formattedToDate,
-            description
-          }
-        );
-        GetData();
-        // console.log(res);
-        if (res.data.status === 'success') {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Experience added successfully.',
-            showConfirmButton: false,
-            timer: 1500
-          });
-          setJobtitle("")
-          setDescription("")
-          setFrom("")
-          setTo("")
-          setCompany("")
-          
-         
-        }
-      } catch (error) {
-        // Handle error
-        console.log(error);
+  const [jobtitle, setJobtitle] = useState('');
+  const [company, setCompany] = useState('');
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [description, setDescription] = useState('');
+  const [loading, setLoadiing] = useState(false);
+
+  //FOrmtting date
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${month}-${day}-${year}`;
+  };
+  const handleAddExperience = async (event) => {
+    event.preventDefault();
+    try {
+      if (!jobtitle || !company || !from || !to || !description) {
+        // If any required field is empty, return early without submitting
+        // Show an error message or perform any necessary action
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please fill the input field",
+        });
+        return;
       }
-    };
-  
-    
-  
+      const formattedFromDate = formatDate(from);
+      const formattedToDate = formatDate(to);
+
+      // ######### 👇👇 Add Education API  👇👇 API############################
+      setLoadiing(true)
+      const res = await axiosInstance.post(
+        '/candidate/profile/experience',
+        {
+          jobtitle,
+          company,
+          from: formattedFromDate,
+          to: formattedToDate,
+          description
+        }
+      );
+      // console.log(res);
+      if (res.data.status === 'success') {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Experience added successfully.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate('/dashboard/candidates/profile');
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+      })
+    } finally {
+      setLoadiing(false)
+    }
+  };
+
+
+
   return (
     <div>
       <div className=" gap-2 max-w-[300px] overflow-y-auto">
         <div className=" p-5">
-            <h1 className="text-xl font-bold mb-4">Add Experience </h1>
-            <div className="flex flex-col justify-between p-5 border bg-slate-100">
+          <h1 className="text-xl font-bold mb-4">Add Experience </h1>
+          <div className="flex flex-col justify-between p-5 border bg-white">
             <form onSubmit={handleAddExperience}>
+            {loading && <Loader />}
               <div className="flex w-full lg:flex-nowrap flex-wrap">
                 <div className="w-full p-2">
                   <label>
@@ -158,19 +152,19 @@ const ProfileExperienceFormAdd = () => {
                 </div>
               </div>
               <div className="  w-full p-2 ">
-                  <Button className=" bg-orange-500 hover:bg-orange-500">Submit</Button>
+                <Button className=" bg-orange-500 hover:bg-orange-500">Submit</Button>
               </div>
             </form>
             <div className="p-2 ">
-            <Link to="/dashboard/candidates/profile" className=" underline" style={{ color: "#0000FF" }}>
-             Cancel
+              <Link to="/dashboard/candidates/profile" className=" underline" style={{ color: "#0000FF" }}>
+                Cancel
               </Link>
             </div>
-            </div>
           </div>
-         
-          </div>
-          
+        </div>
+
+      </div>
+
     </div>
   )
 }

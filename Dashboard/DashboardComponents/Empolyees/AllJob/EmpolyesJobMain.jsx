@@ -158,6 +158,7 @@ const EmpolyesJobMain = () => {
                   JobName.length === 0 ? <>
                     <div className='flex w-full justify-center'>
                       <div>
+                      {loading && <Loder />}
                         <p className=' my-5 font-medium text-xl'>Please Create <span className='text-divyang'>Job</span> </p>
                       </div>
                     </div>
@@ -166,7 +167,7 @@ const EmpolyesJobMain = () => {
                       JobName.map((e, i) => {
                         return (
                           <>
-                            {loading && <Loder />}
+                      
                             <TableRow key={i}>
                               <TableCell className="font-bold text-black">
                                 <div className='w-28 whitespace-nowrap overflow-hidden text-ellipsis'>{e.title}

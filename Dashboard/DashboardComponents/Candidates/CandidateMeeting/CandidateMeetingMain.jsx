@@ -8,6 +8,7 @@ import { SiGooglemeet } from "react-icons/si";
 import { LuClock } from "react-icons/lu";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
+import Loader from "@/Dashboard/DashboardComponents/GlobalComponents/Loader"
 import {
   Dialog,
   DialogContent,
@@ -22,10 +23,21 @@ const Title = {
 
 const CandidateMeetingMain = () => {
   const [allMeering, setAllMeeting] = useState([])
+  const [pastMeeting, setPastMeeting] = useState([])
+  const [loading, setLoading] = useState(false);
   const [cancellationReason, setCancellationReason] = useState("")
   const getAllMeeting = async () => {
-    const res = await axiosInstance.get(`/candidate/meeting`);
-    setAllMeeting(res.data.data);
+    try {
+      setLoading(true)
+      const res = await axiosInstance.get(`/candidate/meeting/status`);
+      setAllMeeting(res.data.data.upcomingMeeting);
+      setPastMeeting(res.data.data.pastMeeting);
+    } catch (error) {
+      console.log();
+    }finally{
+      setLoading(false)
+    }
+  
   }
   useEffect(() => {
     getAllMeeting()
@@ -33,11 +45,13 @@ const CandidateMeetingMain = () => {
 
   const updateMeeting = async (meetingId) => {
     try {
-      const res = await axiosInstance.put(`/candidate/meeting/${meetingId}`, { cancellationReason });
-      console.log(res);
+      setLoading(true)
+       await axiosInstance.put(`/candidate/meeting/${meetingId}`, { cancellationReason });
       getAllMeeting();
     } catch (error) {
       console.error("Error updating meeting:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -52,56 +66,6 @@ const CandidateMeetingMain = () => {
     return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
   };
 
-  const Completed = [
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-    {
-      date: "10/01/2024",
-      expired: "Expired",
-      jobheading: "React Js ",
-      name: "Mohit Jaiswal",
-      desc: "Hello sir! I am React Js Devloper  ",
-      meetingTime: "10 Minutes",
-    },
-  ];
 
   return (
     <div className="w-full overflow-hidden">
@@ -114,7 +78,7 @@ const CandidateMeetingMain = () => {
             Upcoming
           </TabsTrigger>
           <TabsTrigger value="Completed" className="text-xl">
-            Completed
+          Past Meeting
           </TabsTrigger>
         </TabsList>
         <TabsContent value="Upcoming" className="">
@@ -123,6 +87,9 @@ const CandidateMeetingMain = () => {
             {
               allMeering.length === 0 ? (<>
               <div>
+                {
+                  loading && <Loader />
+                }
                 <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
               </div>
               </>) : (
@@ -146,6 +113,7 @@ const CandidateMeetingMain = () => {
                                 <form  >
                                   <div className="flex flex-col w-full gap-2 rounded-lg">
                                     <label>Cancellation Reason</label>
+                                    {loading && <Loader /> }
                                     <textarea className="w-full focus:outline-none focus:ring-0 border-gray-300 rounded-lg focus:border-black" onChange={(event) => setCancellationReason(event.target.value)} ></textarea>
                                   </div>
                                   <DialogFooter className="sm:justify-start">
@@ -186,19 +154,49 @@ const CandidateMeetingMain = () => {
           </div>
         </TabsContent>
         <TabsContent value="Completed" className="w-full">
-          <div className="flex flex-row gap-5 justify-center flex-wrap">
+        <div className="flex flex-row gap-5 justify-center flex-wrap">
             <hr />
-            {Completed.map((e, i) => (
-              <MeetingsCard
-                key={i}
-                date={e.date}
-                expired={e.expired}
-                jobheading={e.jobheading}
-                name={e.name}
-                desc={e.desc}
-                meetingTime={e.meetingTime}
-              />
-            ))}
+            {
+              pastMeeting.length === 0 ? (<>
+              <div>
+                {loading && <Loader />}
+                <p>No Meeting <span className="text-divyang"> Scheduled Yet</span> </p>
+              </div>
+              </>) : (
+                <>
+                  {pastMeeting.map((e, i) => {
+                    return (
+                      <div key={i} className='w-72 px-2 border flex flex-col gap-5 mt-4 rounded-lg' style={{ background: "#ffffff" }} >
+                        <div className='flex mt-4 lg:flex-nowrap flex-wrap justify-between'>
+                          <div className=' flex gap-3'>
+                            <MdOutlineCalendarMonth className='ml-4 text-gray-500 text-2xl' /> <span>{formatDate(e?.date)}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className='ml-4 bg-gray-200 text-gray-500 px-5 py-1 rounded-3xl' >{e?.isActive == true ? "Upcoming" : "Expired"}</span>
+                        </div>
+                        <div className='w-full  h-28 overflow-hidden'>
+                          <p className='text-gray-500 ml-4' >Meeting Link :- <Link target="_blank" rel="noopener noreferrer" to={e?.meetingLink} className='text-blue-600'>{e?.meetingLink} </Link> </p>
+                        </div>
+                        <div className='max-w-28 p-3 h-28 overflow-hidden'>
+                          <p className='text-gray-500 h-24 overflow-hidden'>{e?.isActive == false ? e.cancellationReason : null}</p>
+                        </div>
+                        <div className='flex mt-4 flex-wrap lg:flex-nowrap justify-between mb-5'>
+                          <div className='flex '>
+                            <SiGooglemeet className='ml-4 mt-1' /> <span className='text-gray-500 ml-4'>Start :-{e?.startTime}</span>
+                          </div>
+                          <div className='flex justify-between'>
+                            <LuClock className='mt-1' /> <span className='text-gray-500 ml-4 mr-4'> End :-{e?.endTime}</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    )
+                  })}
+                </>
+              )
+            }
+
           </div>
         </TabsContent>
       </Tabs>

@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PageTitle from '../../GlobalComponents/PageTitle';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 import axiosInstance from '@/src/utils/axiosConfig';
 import { SlRefresh } from "react-icons/sl";
 import Swal from 'sweetalert2';
@@ -102,6 +102,7 @@ const EmpolyeeApplicants = () => {
                     <>
                       <div className='flex w-full justify-center '>
                         <div>
+                        {loading2 && <Loader />}
                           <p className=' my-5 font-medium text-xl'>No Applicants have <span className='text-divyang'> Come yet</span> </p>
                         </div>
                       </div>
@@ -114,7 +115,7 @@ const EmpolyeeApplicants = () => {
                             <>
                               <TableRow key={i}>
                                 <TableCell > <span className="font-bold text-black"> Mohit Jaiswal</span> <br />
-                                  {loading2 && <Loader />}
+                                  
                                   <span>{app.totalyears === "" ? app.totalyears : " Not updated profile"} </span>
                                   {loading && <Loader />}
                                 </TableCell>
