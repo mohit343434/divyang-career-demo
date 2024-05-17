@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
 
@@ -17,7 +17,7 @@ const AdminArticleMain = () => {
         <h1 className='py-5 font-semibold text-2xl '> Article</h1>
         <div className='flex justify-end'>
           <Link to="/dashboard/admin/addArticles">
-            <Button> +Add Article</Button>
+            <Button className="bg-divyang hover:bg-divyang"> +Add Article</Button>
           </Link>
         </div>
         <div >
@@ -34,7 +34,7 @@ const AdminArticleMain = () => {
               <AllBlogs />
             </TabsContent>
             <TabsContent value="scheme" className="w-full">
-<AllScheme/>
+              <AllScheme />
             </TabsContent>
           </Tabs>
         </div>

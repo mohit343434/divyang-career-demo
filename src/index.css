@@ -98,3 +98,43 @@
   color: #fe6200;
   border-bottom: 2px solid #fe6200;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #f2f2f2; /* Light gray background */
+  color: #333; /* Dark gray text color */
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 2px solid #ddd; /* Bottom border */
+}
+
+/* Table Body */
+td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd; /* Bottom border for each cell */
+}
+
+/* Alternate row color */
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Lighter background color for even rows */
+}
+
+/* Hover effect */
+tr:hover {
+  background-color: #f2f2f2; /* Light gray background on hover */
+}

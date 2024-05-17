@@ -27,7 +27,7 @@ const AdminLogin = () => {
         });
         Navigate("/dashboard/admin")
         localStorage.setItem("auth", JSON.stringify(res.data.accessToken));
-        localStorage.setItem("Isadmin", JSON.stringify(res.data.admin));
+        localStorage.setItem("user", JSON.stringify(res.data.admin));
         Swal.fire({
           icon: "success",
           title: "Success",

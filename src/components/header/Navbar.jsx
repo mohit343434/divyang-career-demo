@@ -86,16 +86,20 @@ const Navbar = () => {
                         ) : (
                             <div className='flex items-center gap-5'>
                                 <DropdownMenu >
-                                    <DropdownMenuTrigger className='text-white flex items-center justify-center gap-3'><div className='flex items-center '>{auth?.user?.username}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
+                                    <DropdownMenuTrigger className='text-white flex items-center justify-center gap-3'><div className='flex items-center '>{auth?.user?.username || "Admin"}<IoMdArrowDropdown /></div></DropdownMenuTrigger>
                                     <DropdownMenuContent className='p-5 w-64'>
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <Link to={`/dashboard/${auth?.user?.role === 'candidate' ? "candidates" : "employers"}`}>
+                                        <Link to={`/dashboard/${auth?.user?.role}`}>
                                             <DropdownMenuItem className='text-base'>Dashboard</DropdownMenuItem>
                                         </Link>
-                                        <Link to={`/dashboard/${auth?.user?.role === 'candidate' ? "candidates" : "employers"}/profile`}>
-                                            <DropdownMenuItem className='text-base'>Profile</DropdownMenuItem>
-                                        </Link>
+                                        {
+                                            auth?.user?.role === "admin" ? null : (
+                                                <Link to={`/dashboard/${auth?.user?.role}/profile`}>
+                                                    <DropdownMenuItem className='text-base'>Profile</DropdownMenuItem>
+                                                </Link>
+                                            )
+                                        }
                                         <NavLink onClick={handleLogout} to='/'>
                                             <DropdownMenuItem className='text-base' >
                                                 Logout
@@ -182,7 +186,7 @@ const Navbar = () => {
                                     <Dialog>
                                         <DialogTrigger>
                                             <div className='flex bg-divyang rounded-lg'>
-                                            <Button className="bg-divyang text-white rounded-lg hover:text-divyang text-lg" >Post Job</Button>
+                                                <Button className="bg-divyang text-white rounded-lg hover:text-divyang text-lg" >Post Job</Button>
                                             </div>
                                             {/* <Link className='text-white '>Sign </Link> */}
                                         </DialogTrigger>
