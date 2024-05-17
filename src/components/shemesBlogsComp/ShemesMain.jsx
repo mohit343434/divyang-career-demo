@@ -25,7 +25,7 @@ const ShemesMain = () => {
   const getAllShemes = async () => {
     try {
       setLoadding(true)
-      const response = await axiosInstance.get(`/homepage/article?type=blog`, {
+      const response = await axiosInstance.get(`/homepage/article?type=scheme`, {
         params: {
           page: currentPage,
           limit: limit,

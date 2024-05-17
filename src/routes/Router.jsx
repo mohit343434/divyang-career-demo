@@ -63,6 +63,7 @@ import { HiOutlineHomeModern } from "react-icons/hi2";
 import { CiLink } from "react-icons/ci";
 import AddArticle from "@/Dashboard/DashboardComponents/Admins/AdminArticle/AdminArticleCompo/AddArticle";
 import UpdateArticle from "@/Dashboard/DashboardComponents/Admins/AdminArticle/AdminArticleCompo/UpdateArticle";
+import ProtectedAdminRoute from "./ProtectedAdminRoute";
 const PageNot = lazy(() => import("../components/PageNotFound/PageNot"));
 const AdminArticle = lazy(() => import("@/Dashboard/DashBoardPages/Admins/AdminArticle"));
 const EmpolyeesPostMeeting = lazy(() => import("@/Dashboard/DashboardComponents/Empolyees/EmpolyeesMeeting/EmpolyeesPostMeeting"));
@@ -205,10 +206,10 @@ const Router = ({ children }) => {
         {/* employers Routing ############ */}
         <Route element={<ProtectedEmployerRoute />}>
           <Route
-            path="dashboard/employers"
+            path="dashboard/employer"
             element={
               <SideBar
-                dashboardRoute="/dashboard/employers"
+                dashboardRoute="/dashboard/employer"
                 ROUTER={employers}
               />
             }
@@ -229,10 +230,10 @@ const Router = ({ children }) => {
         {/* candidates Routing ############ */}
         <Route element={<ProtectedCandidateRoute />}>
           <Route
-            path="dashboard/candidates"
+            path="dashboard/candidate"
             element={
               <SideBar
-                dashboardRoute="/dashboard/candidates"
+                dashboardRoute="/dashboard/candidate"
                 ROUTER={candidates}
               />
             }
@@ -252,7 +253,7 @@ const Router = ({ children }) => {
           </Route>
         </Route>
         {/* candidates Routing ############ */}
-        <Route>
+        <Route element={<ProtectedAdminRoute />} >
           <Route
             path="dashboard/admin"
             element={
@@ -269,7 +270,7 @@ const Router = ({ children }) => {
             <Route path={"setting"} element={< AdminSetting />} />
             <Route path={"articles"} element={< AdminArticle />} />
             <Route path={"addArticles"} element={< AddArticle />} />
-            <Route path={"updateArticle"} element={< UpdateArticle />} />
+            <Route path={"articles/:id"} element={< UpdateArticle />} />
             <Route path={"sectors&categories"} element={< AdminSectorsAndCategories />} />
           </Route>
         </Route>

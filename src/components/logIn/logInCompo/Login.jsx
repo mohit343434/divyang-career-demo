@@ -52,11 +52,11 @@ const Login = () => {
         // return
       }
       if (res.data.user.role === 'candidate') {
-        navigate('/dashboard/candidates');
+        navigate('/dashboard/candidate');
         return
       }
       if (res.data.user.role === 'employer') {
-        navigate('/dashboard/employers');
+        navigate('/dashboard/employer');
         return
       }
       // console.log(res.data.user.role)
